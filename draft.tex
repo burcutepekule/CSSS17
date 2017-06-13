@@ -1,0 +1,71 @@
+\documentclass[12pt]{article}
+\usepackage[top=0.85in,left=0.75in,footskip=0.75in]{geometry}
+\usepackage{changepage}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{cite}
+\usepackage{ragged2e}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,fit}
+\usepackage{amsmath,amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage[skins]{tcolorbox}
+\usepackage{cite}
+\usepackage{amsbsy}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{authblk}
+
+%\linespread{1.5}
+
+% Remove brackets from numbering in List of References
+\makeatletter
+\renewcommand{\@biblabel}[1]{\quad#1.}
+\makeatother
+% Leave date blank
+\date{}
+
+
+\definecolor{lGreen}{rgb}{0.564, 0.933, 0.564}
+\definecolor{lBlue}{rgb}{0.564, 0.8, 0.933}
+\definecolor{yellow}{rgb}{0.980, 0.976, 0.6}
+\definecolor{lgray}{rgb}{0.937, 0.752, 0.560}
+\newcommand{\hla}[1]{\sethlcolor{lGreen}\hl{#1}}
+\newcommand{\hlb}[1]{\sethlcolor{yellow}\hl{#1}}
+\newcommand{\hlc}[1]{\sethlcolor{lBlue}\hl{#1}}
+\newcommand{\hlu}[1]{\sethlcolor{lgray}\hl{#1}}
+
+
+\begin{document}
+\vspace*{0.2in}
+\begin{flushleft}
+{\Large
+\textbf\newline{An Amazing Project} % Please use "sentence case" for title and headings (capitalize only the first word in a title (or heading), the first word in a subtitle (or subheading), and any proper nouns).
+}
+\newline
+% Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
+\\
+Greg $\&$ Burcu
+\\
+\bigskip
+CSSS 17
+\\
+\bigskip
+\end{flushleft}
+
+\begin{itemize}
+\item Compare the stability of ecological communities, May's (or ours) random matrix vs structured community . Analyze stability as a function of,
+\begin{itemize}
+\item [1.] Population size 
+\item [2.] Structure of the dispersal matrix -> modularity, degree distribution
+\end{itemize}
+\item Perturbation analysis (Climate change, extinction of a species) -> how long does it take for the system to go \textbf{back} to equilibrium, if there is one. 
+\item Hopefully, validate the method with a dataset. (greg's ocean data yay!)
+\end{itemize}
+
+
+\end{document}
+    
