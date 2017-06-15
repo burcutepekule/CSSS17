@@ -43,7 +43,7 @@
 \vspace*{0.2in}
 \begin{flushleft}
 {\Large
-\textbf\newline{An Amazing Project} % Please use "sentence case" for title and headings (capitalize only the first word in a title (or heading), the first word in a subtitle (or subheading), and any proper nouns).
+\textbf\newline{Conjugate Interaction - Dispersal Matricies that Optimizes the Community Stability} % Please use "sentence case" for title and headings (capitalize only the first word in a title (or heading), the first word in a subtitle (or subheading), and any proper nouns).
 }
 \newline
 % Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
@@ -57,15 +57,43 @@ CSSS 17
 \end{flushleft}
 
 \begin{itemize}
-\item Compare the stability of ecological communities, May's (or ours) random matrix vs structured community . Analyze stability as a function of,
+
+\item \textbf{Motivation : } Complexity versus Stability question : Weak interactions stabilize food webs.
+\item \textbf{Aim $\#1$: } Comparing the stability of uniform interaction / dispersal matricies with exponentialy distributed interaction / dispersal matricies, as a function of $\alpha_a = \alpha_m$.
+\end{itemize}
+\begin{table}[!h]
+\centering
+\begin{tabular}{lll}
+ & Community (A) & Dispersal (M)  \\
+ & $\sim U(-1,1)$ & $\sim U(-1,1)$  \\
+ & $\sim U(-1,1)$ & $\sim \exp(\alpha_m)$  \\
+ & $\sim \exp(\alpha_a)$ & $\sim U(-1,1)$  \\
+ & $\sim \exp(\alpha_a)$ & $\sim \exp(\alpha_m)$
+\end{tabular}
+\end{table}
 \begin{itemize}
-\item [1.] Population size 
-\item [2.] Structure of the dispersal matrix -> modularity, degree distribution
+\item \textbf{Aim $\#2$: } Stability as a linear or a non-linear function of parameters : When both matricies are exponentially distributed with $\alpha_a$ and $\alpha_m$, how does stability change as a multiplicative / additive function of the $\{\alpha_a,\alpha_m\}$ pair?
+\item \textbf{Aim $\#3$: } Generalization : Find conjugate interaction-dispersal matrix pairs that optimizes the stability of a food web.
+\item \textbf{Aim $\#4$: } Validation : Can we use real data sets do validate the stability of the conjugate pairs?
+\item \textbf{Aim $\#3$: } Future work :  Abundance vector, source and sink added to the system, perturbation in abundance.
+\item [] \textbf{Parameter Definitions}
+\item $N$ : Number of species.
+\item $P_N$ : Number of patches (habitats). 
+\item $X_{i}^{l}$ : Abundance of species $i$ in patch $l$.
+\item $a_{ij}^{l}$ : Interaction coefficient between species $i$ and species $j$ in patch $l$.
+\item $m_{i}^{l \rightarrow k}$ : Migration coefficient of species $i$ from patch $l$ to patch $k$.
+\item [] \textbf{Simulation Rules}
+\item Dispersal is symmetric, i.e.,  $m_{i}^{l \rightarrow k}=m_{i}^{k \rightarrow l}$
+\item Same species have the same dispersal rate, i.e., $m_{i}^{l \rightarrow k} = m_{i}\,\, \forall k, l.$
+\item Initial Conditions : Each patch is identical, and abundance of species are randomly drawn.
+\item \textbf{Governing ODE}
+\begin{align}
+\frac{dX_{i}^{l}}{dt} = X_{i}^{l}\sum_{j=1}^{N}a_{ij}^{l}X_{j}^{l} - \sum_{k=1 (l \neq k)}^{P_N}m_{i}^{l \rightarrow k} X_{i}^{l}+ \sum_{k=1 (k \neq l)}^{P_N}m_{i}^{k \rightarrow l}X_{i}^{k}
+\end{align}
+\item \textbf{Jacobian Matrix : }Can be automatized via MATLAB. (Or can be symbolically hardcoded as well)
 \end{itemize}
-\item check \textbf{weak interaction effect} - seems like it stabilizes the foodwebs.
-\item Perturbation analysis (Climate change, extinction of a species) - how long does it take for the system to go \textbf{back} to equilibrium, if there is one. 
-\item Hopefully, validate the method with a dataset. (greg's ocean data yay!)
-\end{itemize}
+
+
 
 
 \end{document}
