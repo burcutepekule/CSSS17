@@ -1,18 +1,33 @@
 clear all;close all;clc;
 
-N  = 3; % Num of Species
-PN = 2; % Num of patches
+N  = 2; % Num of Species
+PN = 3; % Num of Patches
 
-A = sym('a%d%d', [N PN]);
+A = sym('a%d%d_%d', [N N PN]);
+X = sym('x%d_%d', [N PN]);
+M = sym('m%d_%d%d', [N PN PN]);
+
+syms sum01 sum02 sum03
+for i=1:N
+    for l=1:PN
+        sum01=0; sum02=0; sum03=0;
+        for j=1:N
+            sum01=sum01+A(i,j,l)*X(j,l);
+        end
+        for k=1:PN
+            sum02=sum02+M(i,l,k);
+        end
+        for k=1:PN
+            sum03=sum03+M(i,k,l)*X(i,k);
+        end
+        eqn{i,l} = X(i,l)*sum01-X(i,l)*sum02+sum03;
+    end
+end
 %%
-
-syms ntot m0 m1 m2 m3 mu nu qu gamma beta sigma c1 c2 c3
-syms S R1 R2 R3 X
-eqn1 = ntot*m0*mu-mu*S-gamma*S+beta*S*X;
-eqn2 = ntot*m1*mu-mu*R1-gamma*R1+beta*(1-c1)*R1*X;
-eqn3 = ntot*m2*mu-mu*R2-gamma*R2+beta*(1-c2)*R2*X;
-eqn4 = ntot*m3*mu-mu*R3-gamma*R3+beta*(1-c3)*R3*X;
-eqn5 = ntot*(1-m0-m1-m2-m3)*mu-mu*X-gamma*(S+R1+R2+R3)+beta*(S*X+(1-c1)*R1*X+...
-    (1-c2)*R2*X+(1-c3)*R3*X);
-
-J = jacobian([eqn1 eqn2 eqn3 eqn4 eqn5],[S R1 R2 R3 X]);
+eqnVec = [];
+for i=1:N
+    for l=1:PN
+    eqnVec = [eqnVec eqn{i,l}];
+    end
+end
+J = jacobian(eqnVec,reshape(X,1,N*PN));
