@@ -20,11 +20,11 @@ for sims=1:numOfSims
         M(:,k,k) = 0;
     end
     MAll{sims} = double(M);
-    A = zeros(N,N,PN);
+    A = zeros(N,N,PN); 
     for k=1:N
         for j=1:N
             if(k==j)
-                A(k,j,:)=-1; % can choose stg else
+                A(k,j,:)=0; % set a_ii to zero because you have the s term!
             else
                 if(double(strcmp(distA,'uniform'))==1)
                     dum = -1+2*rand(1,1); % UNIFORM DISTRIBUTION

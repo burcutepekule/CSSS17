@@ -1,0 +1,9 @@
+OPTIMIZE MATLAB CODE
+
+1) A matrices are identical for each patch
+2) A matrices are symmetric wrt the diagonal
+3) A matrices have the same numerical value for all the elements in the diagonal
+
+4) M matrices are identical for each patch
+5) M matrix for a given patch has identical columns
+ 
