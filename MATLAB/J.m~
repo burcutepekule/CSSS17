@@ -1,13 +1,7 @@
-clear all;close all;clc;
-
-N  = 2; % Num of Species
-PN = 3; % Num of Patches
-
+function [  ] = J( X,A,M )
 A = sym('a%d%d_%d', [N N PN]);
 X = sym('x%d_%d', [N PN]);
 M = sym('m%d_%d%d', [N PN PN]);
-
-syms sum01 sum02 sum03
 for i=1:N
     for l=1:PN
         sum01=0; sum02=0; sum03=0;
@@ -23,11 +17,14 @@ for i=1:N
         eqn{i,l} = X(i,l)*sum01-X(i,l)*sum02+sum03;
     end
 end
-%%
 eqnVec = [];
 for i=1:N
     for l=1:PN
-    eqnVec = [eqnVec eqn{i,l}];
+        eqnVec = [eqnVec eqn{i,l}];
     end
 end
-J = jacobian(eqnVec,reshape(X,1,N*PN));
+J=jacobian(eqnVec,reshape(X,1,N*PN));
+
+
+end
+

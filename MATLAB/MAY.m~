@@ -1,0 +1,9 @@
+clear all;close all;clc;
+n = 20;
+for i=1:100
+J = randn(n,n);
+J(1:n+1:n*n) =-1;
+ei=eigs(J);
+plot(real(ei),imag(ei),'o')
+
+end
