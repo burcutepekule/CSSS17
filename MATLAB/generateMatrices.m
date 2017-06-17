@@ -1,4 +1,4 @@
-function [MAll,AAll] = generateMatrices(numOfSims,N,PN,mu,distA,distM)
+function [MAll,AAll] = generateMatrices(numOfSims,N,PN,mu,s,distA,distM)
 MAll      = [];
 AAll      = [];
 for sims=1:numOfSims
@@ -20,16 +20,20 @@ for sims=1:numOfSims
         M(:,k,k) = 0;
     end
     MAll{sims} = double(M);
-    A = zeros(N,N,PN);
+    A = zeros(N,N,PN); 
     for k=1:N
         for j=1:N
             if(k==j)
-                A(k,j,:)=-1; % can choose stg else
+                A(k,j,:)=s; % set a_ii equal to the s term!
             else
                 if(double(strcmp(distA,'uniform'))==1)
                     dum = -1+2*rand(1,1); % UNIFORM DISTRIBUTION
                 elseif(double(strcmp(distA,'exponential'))==1)
+<<<<<<< HEAD
                     dum = exprnd(mu);
+=======
+                     dum = exprnd(mu);
+>>>>>>> f94b8f61a4fc6645386f1ed70ad9062aebc201b6
                 elseif(double(strcmp(distA,'normal'))==1)
                     dum = randn;
                 elseif(double(strcmp(distA,'zero'))==1)

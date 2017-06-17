@@ -1,4 +1,4 @@
-function [ J ] = insertJ(J,N,PN,X_in,A_in,M_in)
+function [ J ] = insertJ_opt(J,N,PN,X_in,A_in,M_in)
 % THIS FUCKER TAKES TIME
 for i=1:N
     for j=1:N
@@ -20,6 +20,7 @@ for i=1:N
     for j=1:PN
             J=subs(J,['x' num2str(i)  '_' num2str(j)],X_in(i,j));
     end
-end      
+end
+
 end
 
