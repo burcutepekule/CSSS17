@@ -7,7 +7,7 @@ for sims=1:numOfSims
         if(double(strcmp(distM,'uniform'))==1)
             dum = -1+2*rand(1,1); % UNIFORM DISTRIBUTION
         elseif(double(strcmp(distM,'exponential'))==1)
-            dum = -mu*log(rand(1,1));
+            dum = exprnd(mu);
         elseif(double(strcmp(distM,'normal'))==1)
             dum = randn;
         elseif(double(strcmp(distM,'zero'))==1)
@@ -29,7 +29,7 @@ for sims=1:numOfSims
                 if(double(strcmp(distA,'uniform'))==1)
                     dum = -1+2*rand(1,1); % UNIFORM DISTRIBUTION
                 elseif(double(strcmp(distA,'exponential'))==1)
-                    dum = -mu*log(rand(1,1));
+                    dum = exprnd(mu);
                 elseif(double(strcmp(distA,'normal'))==1)
                     dum = randn;
                 elseif(double(strcmp(distA,'zero'))==1)

@@ -1,0 +1,187 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[a4paper, total={6.25in, 9in}]{geometry}
+\usepackage{amsmath,amsfonts,amsthm,bm}
+\usepackage[english]{isodate}
+\usepackage[final]{pdfpages}
+\usepackage{graphicx}
+\usepackage{breakcites}
+\usepackage{mathtools}
+\usepackage[displaymath, mathlines]{lineno}
+\usepackage[labelfont=bf,skip=0.5cm,justification=justified,singlelinecheck=false]{caption}
+\bibliographystyle{apalike}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Stuff for line numbering %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*\patchAmsMathEnvironmentForLineno[1]{%
+  \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
+  \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
+  \renewenvironment{#1}%
+     {\linenomath\csname old#1\endcsname}%
+     {\csname oldend#1\endcsname\endlinenomath}}% 
+\newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
+  \patchAmsMathEnvironmentForLineno{#1}%
+  \patchAmsMathEnvironmentForLineno{#1*}}%
+\AtBeginDocument{%
+\patchBothAmsMathEnvironmentsForLineno{equation}%
+\patchBothAmsMathEnvironmentsForLineno{align}%
+\patchBothAmsMathEnvironmentsForLineno{flalign}%
+\patchBothAmsMathEnvironmentsForLineno{alignat}%
+\patchBothAmsMathEnvironmentsForLineno{gather}%
+\patchBothAmsMathEnvironmentsForLineno{multline}%
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Meta-Community Stability on Dispersal Networks}
+\author{\small{Burcu Tepekule, Gregory Britten}}
+\date{\small{\printdayoff\today}}
+
+\begin{document}
+\maketitle 
+%\linenumbers
+
+\subsection*{Abstract}
+We consider meta-community stability in the context of the meta-community dispersal network degree distribution. In particular we characterize meta-community stability for the case of symmetric and heavy-tailed degree distributions for intra-community interactions (May's community matrix) and the coupled dispersal network in the meta-community generalization. 
+
+\subsection*{Questions}
+
+\begin{itemize}
+
+\item \textbf{Dispersal network degree distribution} Effect of exp() vs. N() after integrating over interaction networks
+\item \textbf{Is `few strong many weak` robust to dispersal network structure?} Are other interaction networks more robust for particular dispersal networks? 
+\item \textbf{Complexity versus stability relationship for different network structure?} Meta-community stability versus \# of species for different degree distributions
+\item \textbf{Stability parameter space for particular degree distributions} e.g. stability  as a function of $\alpha_a = \alpha_m$.
+\end{itemize}
+
+We consider the following degree distributions
+\begin{table}[!h]
+\centering
+\begin{tabular}{lll}
+ & Community (A) & Dispersal (M)  \\
+ & $\sim U(-1,1)$ & $\sim U(-1,1)$  \\
+ & $\sim U(-1,1)$ & $\sim \exp(\alpha_m)$  \\
+ & $\sim \exp(\alpha_a)$ & $\sim U(-1,1)$  \\
+ & $\sim \exp(\alpha_a)$ & $\sim \exp(\alpha_m)$
+\end{tabular}
+\end{table}
+\begin{itemize}
+\item \textbf{Aim $\#2$: } Stability as a linear or a non-linear function of parameters : When both matricies are exponentially distributed with $\alpha_a$ and $\alpha_m$, how does stability change as a multiplicative / additive function of the $\{\alpha_a,\alpha_m\}$ pair?
+\item \textbf{Aim $\#3$: } Generalization : Find conjugate interaction-dispersal matrix pairs that optimizes the stability of a food web.
+\item \textbf{Aim $\#4$: } Validation : Can we use real data sets do validate the stability of the conjugate pairs?
+\item \textbf{Aim $\#5$: } Future work :  Abundance vector, source and sink added to the system, perturbation in abundance.
+\item [] \textbf{Parameter Definitions}
+\item $N$ : Number of species.
+\item $P_N$ : Number of patches (habitats). 
+\item $X_{i}^{l}$ : Abundance of species $i$ in patch $l$.
+\item $a_{ij}^{l}$ : Interaction coefficient between species $i$ and species $j$ in patch $l$.
+\item $m_{i}^{l \rightarrow k}$ : Migration coefficient of species $i$ from patch $l$ to patch $k$.
+\item [] \textbf{Simulation Rules}
+\item Dispersal is symmetric, i.e.,  $m_{i}^{l \rightarrow k}=m_{i}^{k \rightarrow l}$
+\item Same species have the same dispersal rate, i.e., $m_{i}^{l \rightarrow k} = m_{i}\,\, \forall k, l.$
+\item Initial Conditions : Each patch is identical, and abundance of species are randomly drawn.
+\end{itemize}
+
+
+Meta-community dynamics
+
+The governing ODE for the Lotka-Volterra predator prey equations (i.e. \textit{the mass action equations}) on a dispersal network is as follows 
+
+\[ \frac{dX_{i}^{l}}{dt} = r_i^l X_i^l 
+		 + \sum_{j=1}^{N}a_{ij}^{l}X_{i}^{l}X_{j}^{l} 
+		 + \sum_{\substack{k=1\\k \neq l}}^{P}m_{i}^{k \rightarrow l}X_{i}^{k}		
+		 -  \sum_{\substack{k=1\\l \neq k}}^{P}m_{i}^{l \rightarrow k} X_{i}^{l} \] 
+
+
+For the purpose of notation, we define
+\[ \frac{dX_{i}^{l}}{dt} \equiv f(X_{i}^{l}). \]
+
+The general Jacobian matrix for the meta-community dynamics is then
+\[ \mathbf{J} = \begin{bmatrix}
+    \frac{\partial f(X_1^1)}{\partial X_1^1} & \frac{\partial f(X_1^1)}{\partial X_2^1} & \dots & \frac{\partial f(X_1^1)}{\partial X_N^1}  &  \frac{\partial f(X_1^1)}{\partial X_1^2} & \frac{\partial f(X_1^1)}{\partial X_2^2} & \dots & \frac{\partial f(X_1^1)}{\partial X_N^{P}} \\ 
+    \frac{\partial f(X_2^1)}{\partial X_1^1} &  \frac{\partial f(X_2^1)}{\partial X_2^1} & \dots & \dots & \dots & \dots & \dots & \frac{\partial f(X_2^1)}{\partial X_N^P} \\
+    \vdots    & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots\\
+    \frac{\partial f(X_N^1)}{\partial X_1^1} & \vdots   & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots \\
+    \frac{\partial f(X_1^2)}{\partial X_1^1} & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots \\
+    \frac{\partial f(X_2^2)}{\partial X_1^1} & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots\\
+    \vdots   & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \frac{\partial f(X_{N-1}^P)}{\partial X_N^P}\\
+    \frac{\partial f(X_N^P)}{\partial X_1^1} & \frac{\partial f(X_N^P)}{\partial X_1^2} & \dots & \dots & \dots & \dots & \frac{\partial f(X_N^P)}{\partial X_{N-1}^P} & \frac{\partial f(X_N^P)}{\partial X_N^P} \\    
+\end{bmatrix} \]
+
+where species $1:N$ in patch $l$ are stacked as the top rows, followed by species $1:N$ in patch $l+1$, and so on. 
+
+For the case $N = 2, P=2$ the equations are
+
+\begin{align*}
+\frac{dX_1^1}{dt} &=  r_1^1 X_1^1 - a_1^1(X_1^1)^2 +  a_{1,2}^1X_1^1X_2^1 + m_1^{2\rightarrow 1} X_1^2 - m_1^{1\rightarrow 2} X_1^1\\
+\frac{dX_2^1}{dt} &=  r_2^1 X_2^1 - a_2^1 (X_2^1)^2 + a_{2,1}^1X_2^1X_1^1  + m_2^{2\rightarrow 1} X_2^2 - m_2^{1\rightarrow 2}X_2^1\\
+\frac{dX_1^2}{dt} &=  r_1^2 X_1^2 - a_1^2 (X_1^2)^2 + a_{1,2}^2X_1^2X_2^2 + m_1^{1\rightarrow 2}X_1^1 - m_1^{2\rightarrow 1}X_1^2 \\
+\frac{dX_2^2}{dt} &=  r_2^2 X_2^2 - a_2^2 (X_2^2)^2  + a_{2,1}^2X_2^2X_1^2 + m_2^{1\rightarrow 2} X_2^1 - m_2^{2\rightarrow 1} X_2^2\\
+\end{align*}
+
+So the Jacobian is 
+
+\begin{align*}
+\mathbf{J} &= \begin{bmatrix}
+    \frac{\partial f(X_1^1)}{\partial X_1^1} & \frac{\partial f(X_1^1)}{\partial X_2^1} & \frac{\partial f(X_1^1)}{\partial X_1^2} & \frac{\partial f(X_1^1)}{\partial X_2^2}\\ 
+        \frac{\partial f(X_2^1)}{\partial X_1^1} & \frac{\partial f(X_2^1)}{\partial X_2^1} & \frac{\partial f(X_2^1)}{\partial X_1^2} & \frac{\partial f(X_2^1)}{\partial X_2^2}\\ 
+            \frac{\partial f(X_1^2)}{\partial X_1^1} & \frac{\partial f(X_1^2)}{\partial X_2^1} & \frac{\partial f(X_1^2)}{\partial X_1^2} & \frac{\partial f(X_1^2)}{\partial X_2^2}\\ 
+                \frac{\partial f(X_2^2)}{\partial X_1^1} & \frac{\partial f(X_2^2)}{\partial X_2^1} & \frac{\partial f(X_2^2)}{\partial X_1^2} & \frac{\partial f(X_2^2)}{\partial X_2^2} \\    
+\end{bmatrix} \\
+ &= \scriptsize{\begin{bmatrix}
+    r_1^1 - 2a_1^1X_1^1 + a_{1,2}^1X_2^1 - m_1^{1\rightarrow 2} &  a_{1,2}^1 X_1^1 & m_1^{2\rightarrow 1} & 0 \\ 
+    a_{1,2}^1X_2^1 & r_2^1 - 2a_2^1X_2^1 + a_{2,1}X_1^1 - m_2^{1\rightarrow 2} & 0 & m_2^{2\rightarrow 1} \\
+    m_1^{1\rightarrow 2} & 0 & r_1^2 -2a_1^2X_1^2 + a_{1,2}^2X_2^2  - m_1^{2\rightarrow 1}& a_{1,2}^2X_1^2 \\
+    0 & m_2^{1\rightarrow 2} & a_{2,1}^2X_2^2 & r_2^2 - 2a_2^2X_2^2 + a_{2,1}^2X_1^2-m_2^{2\rightarrow 1}\\       
+\end{bmatrix} }
+\end{align*}
+
+We partition the Jacobian into intra-community interaction and meta-community dispersal components
+\[ \mathbf{J} = \mathbf{J_A} + \mathbf{J_M} \]
+
+where
+\begin{align*}
+\mathbf{J_A} &= \small{\begin{bmatrix}
+    r_1^1 - 2a_1^1X_1^1+a_{1,2}^1X_2^1 & a_{1,2}^1X_1^1 & 0 & 0 \\ 
+    a_{1,2}^1X_2^1 & r_2^1 - 2a_2^1X_2^1 + a_{2,1}X_1^1 & 0 & 0 \\
+    0 & 0 & r_1^2 -2a_1^2X_1^2 + a_{1,2}^2X_2^2  & a{1,2}^2X_1^2 \\
+    0 & 0 & a_{2,1}^2X_2^2 & r_2^2 - 2a_2^2X_2^2 + a_{2,1}^2X_1^2 \\       
+\end{bmatrix}} \\
+ \mathbf{J_M} &= \begin{bmatrix}
+    -m_1^{1\rightarrow 2} & 0 & m_1^{2\rightarrow 1} & 0 \\ 
+    0 & -m_2^{1\rightarrow 2}& 0 & m_2^{2\rightarrow 1} \\
+    m_1^{1\rightarrow 2} & 0 & -m_1^{2\rightarrow 1} & 0 \\
+    0 & m_2^{1\rightarrow 2} & 0 & -m_2^{2\rightarrow 1} \\       
+\end{bmatrix} 
+\end{align*}
+
+We can further decompose $\mathbf{J_M}$ into emigration and immigration networks
+\[ \mathbf{J_M} = \mathbf{J_{M_e}} + \mathbf{J_{M_i}} \] 
+
+where the emigration matrix is the diagonal matrix $\mathbf{J_{M_e}}$ and the immigration matrix $\mathbf{J_{M_i}}$ forms the off-diagonal terms. 
+
+\subsection*{General community dynamics}
+For a general community dynamics model $g$ in detailed balance, 
+\[ \tilde{a}_{i,j}^l = \frac{\partial g(X_i^l)}{\partial X_j^l}\Bigr|_{\substack{{X_i^l=X_i^l}^*\\{X_j^l=X_j^l}^*}}  \]
+
+\subsection*{Degree distributions}
+Here we consider meta-community stability as a function of the probability distribution for the underlying network components. We are particularly interested in how dispersal network degree distribution models modulate the meta-community stability in the context of different intra-community interactions networks.
+
+We make a distinction between the graphical structure of the interaction and dispersal networks, versus the structure of the resulting Jacobian at detailed balance. 
+
+\subsubsection*{Dispersal networks}
+\subsubsection*{Interactions networks}
+
+\bibliography{library}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Figures %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%\begin{figure}[h]
+%    \begin{center}
+%       \includegraphics[scale=]{}
+%    \end{center}
+%\caption[\textbf{}]{\textbf{}. }
+%\label{Figure1}
+%\end{figure}
+\end{document}
