@@ -1,4 +1,4 @@
-function [ J ] = generateSymbolicJacobian_opt(N,PN,s,Sp)
+function [J,Jfunc] = generateSymbolicJacobian_opt(N,PN,s,Sp)
 % N  = 2; % Num of Species
 % PN = 3; % Num of Patches
 A = sym('a%d%d_%d', [N N PN]);
@@ -30,6 +30,7 @@ for i=1:N
         eqnVec = [eqnVec eqn{i,l}];
     end
 end
-J = jacobian(eqnVec,reshape(X,1,N*PN));
+J     = jacobian(eqnVec,reshape(X,1,N*PN));
+Jfunc = matlabFunction(J,'File','jacob');
 end
 

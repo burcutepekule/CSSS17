@@ -20,7 +20,6 @@ for i=1:N
     for j=1:PN
             J=subs(J,['x' num2str(i)  '_' num2str(j)],X_in(i,j));
     end
-end
-
+end      
 end
 
