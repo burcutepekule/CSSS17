@@ -24,7 +24,7 @@ for sims=1:numOfSims
     for k=1:N
         for j=1:N
             if(k==j)
-                A(k,j,:)=s; % set a_ii equal to the s term!
+                A(k,j,:)=-s; % set a_ii equal to the s term!
             else
                 if(double(strcmp(distA,'uniform'))==1)
                     dum = -1+2*rand(1,1); % UNIFORM DISTRIBUTION

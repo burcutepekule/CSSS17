@@ -20,20 +20,26 @@ for sims=1:numOfSims
     A = zeros(1,N*N*PN);
     len = (N+1)*PN;
     for k=1:N-1
-        A((k-1)*len+1:(k-1)*len+1+PN-1)=s;
+        A((k-1)*len+1:(k-1)*len+1+PN-1)=-s;
+          vecLen = length((k-1)*len+1+PN : k*len);
+          dumVec=[];
         if(double(strcmp(distA,'uniform'))==1)
-            dum = -1+2*rand(1,1); % UNIFORM DISTRIBUTION
+             dumVec = -1+2*rand(1,vecLen); % UNIFORM DISTRIBUTION
+%             dum = -1+2*rand;
         elseif(double(strcmp(distA,'exponential'))==1)
-            dum = exprnd(mu);
+             dumVec = exprnd(mu,[1,vecLen]);
+%            dum = exprnd(mu);
         elseif(double(strcmp(distA,'normal'))==1)
-            dum = randn;
+             dumVec = randn(1,vecLen);
+%            dum = randn;
         elseif(double(strcmp(distA,'zero'))==1)
-            dum=0;
+             dumVec = zeros(1,vecLen);
+%            dum = 0;
         end
-        A((k-1)*len+1+PN : k*len)=dum; %MADE USE OF SYMMETRY AND IDENTICAL PATCHES
+        A((k-1)*len+1+PN : k*len)=dumVec; 
     end
     k=N;
-    A((k-1)*len+1:(k-1)*len+1+PN-1)=s;
+    A((k-1)*len+1:(k-1)*len+1+PN-1)=-s;
     AAll{sims}=double(A);
 end
 end
