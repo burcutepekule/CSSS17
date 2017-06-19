@@ -43,7 +43,8 @@
 \vspace*{0.2in}
 \begin{flushleft}
 {\Large
-\textbf\newline{Conjugate Interaction - Dispersal Matricies that Optimizes the Community Stability} }
+\textbf\newline{Conjugate Interaction - Dispersal Matricies that Optimizes the Community Stability} % Please use "sentence case" for title and headings (capitalize only the first word in a title (or heading), the first word in a subtitle (or subheading), and any proper nouns).
+}
 \newline
 % Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
 \\
@@ -87,35 +88,12 @@ CSSS 17
 \item Initial Conditions : Each patch is identical, and abundance of species are randomly drawn.
 \item \textbf{Governing ODE}
 \begin{align}
-\frac{dX_{i}^{l}}{dt} = r_i^l X_i^l  + \sum_{j=1}^{N}a_{ij}^{l}X_{i}^{l}X_{j}^{l} - \sum_{k=1 (l \neq k)}^{P_N}m_{i}^{l \rightarrow k} X_{i}^{l}+ \sum_{k=1 (k \neq l)}^{P_N}m_{i}^{k \rightarrow l}X_{i}^{k}
-\end{align} % removed the density dependent term - s{X_i^l}^2
+\frac{dX_{i}^{l}}{dt} = X_{i}^{l}\sum_{j=1}^{N}a_{ij}^{l}X_{j}^{l} - \sum_{k=1 (l \neq k)}^{P_N}m_{i}^{l \rightarrow k} X_{i}^{l}+ \sum_{k=1 (k \neq l)}^{P_N}m_{i}^{k \rightarrow l}X_{i}^{k}
+\end{align}
 \item \textbf{Jacobian Matrix : }Can be automatized via MATLAB. (Or can be symbolically hardcoded as well) 
 \end{itemize}
 
-\[ \frac{dX_{i}^{l}}{dt} \equiv f(X_{i}^{l}) \]
 
-\[ \mathbf{J} = \begin{bmatrix}
-    \frac{\partial f(X_1^1)}{\partial X_1^1} & \frac{\partial f(X_1^1)}{\partial X_2^1} & \dots & \frac{\partial f(X_1^1)}{\partial X_N^1}  &  \frac{\partial f(X_1^1)}{\partial X_1^2} & \frac{\partial f(X_1^1)}{\partial X_2^2} & \dots & \frac{\partial f(X_1^1)}{\partial X_N^{P}} \\
-    
-    \frac{\partial f(X_2^1)}{\partial X_1^1} &  \frac{\partial f(X_2^1)}{\partial X_2^1} & \dots & \dots & \dots & \dots & \dots & \frac{\partial f(X_2^1)}{\partial X_N^P} \\
-    \vdots    & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots\\
-    \frac{\partial f(X_N^1)}{\partial X_1^1} & \vdots   & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots \\
-    \frac{\partial f(X_1^2)}{\partial X_1^1} & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots \\
-    \frac{\partial f(X_2^2)}{\partial X_1^1} & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots\\
-    \vdots   & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \frac{\partial f(X_{N-1}^P)}{\partial X_N^P}\\
-    \frac{\partial f(X_N^P)}{\partial X_1^1} & \frac{\partial f(X_N^P)}{\partial X_1^2} & \dots & \dots & \dots & \dots & \frac{\partial f(X_N^P)}{\partial X_{N-1}^P} & \frac{\partial f(X_N^P)}{\partial X_N^P} \\
-    
-\end{bmatrix}\]
-
-
-For the case $N = 2, P=2$: 
-
-\begin{align*}
-\frac{dX_1^1}{dt} &=  r_1^1 X_1^1 + a_{1,1}(X_1^1)^2 +  a_{1,2}X_2^1 + m^{2\rightarrow 1} X_1^2 - m_1^{1\rightarrow 2} X_1^1\\
-\frac{dX_2^1}{dt} &=  r_2^1 X_2^1 + a_{2,2} (X_1^2)^2 + a_{2,1}X_1^2  + m_2^{2\rightarrow 1}\\
-\frac{dX_1^2}{dt} &=  r\\
-\frac{dX_2^2}{dt} &=  r\\
-\end{align*}
 
 
 \end{document}
