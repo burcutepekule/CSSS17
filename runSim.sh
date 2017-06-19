@@ -15,6 +15,10 @@ subs="_"
 distAPass="'$distA'"
 distMPass="'$distM'"
 
+cd /Users/burcu/Desktop/
+mkdir JacobianData
+mkdir DATA
+
 cd /Users/burcu/Desktop/CSSS17/MATLAB
 for species in ${arrSpecies[*]}
 do
