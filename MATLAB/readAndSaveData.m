@@ -1,6 +1,6 @@
-function [ ] = readAndSaveData(folderName,s,r,mu)
+function [ ] = readAndSaveData(folderName,timeStamp,s,r,mu)
 % folderName = 'uniform_uniform_SP_2';
-directory=['/Users/burcu/Desktop/DATA/' folderName '/'];
+directory=['/Users/burcu/Desktop/SIM_' num2str(timeStamp) '/DATA/' folderName '/'];
 D = dir([directory,'/S*']);
 speciesIndexVec = [];
 patchesIndexVec = [];
@@ -46,7 +46,7 @@ for i=1:length(species)
         avgEig(i,j)=mean(maxEig(i,j,:));
     end
 end
-file2save = ['DATA_' folderName];
+file2save = ['DATA_' folderName '_TS_'  num2str(timeStamp)];
 assignin('caller','s', s)
 assignin('caller','r', r)
 assignin('caller','mu', mu)
