@@ -4,15 +4,15 @@
 timestamp=`date +%s` $*
 last=${timestamp: -6}
 
-numSims=10
-Sp=15
+numSims=100
+Sp=10
 s=1
 r=1
 mu=0.1
 #arrSpecies=(2 3 4 5 6 7 8 9 10 11 12 13 14 15)
 #arrPatches=(2 3 4 5 6 7 8 9 10 11 12 13 14 15)
-arrSpecies=(2 3)
-arrPatches=(2)
+arrSpecies=(2 3 5 7 10 12)
+arrPatches=(2 3 5 7 10 12)
 distA="UNIFORM"
 distM="UNIFORM"
 subs="_"
