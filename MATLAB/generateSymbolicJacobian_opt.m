@@ -24,6 +24,9 @@ for i=1:N
         eqnVec = [eqnVec eqn{i,l}];
     end
 end
+Asyms = reshape(A(:),[],1);
+Msyms = reshape(M(:),[],1);
+Xsyms = reshape(X(:),[],1);
 J     = jacobian(eqnVec,reshape(transpose(X),1,N*PN));
 Jfunc = matlabFunction(J,'File','jacob');
 end

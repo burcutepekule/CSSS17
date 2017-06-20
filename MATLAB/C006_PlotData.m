@@ -1,5 +1,5 @@
 clear all;close all;clc;
-load('DATA_UNIFORM_UNIFORM_SP_5')
+load('DATA_UNIFORM_UNIFORM_SP_15')
 gridSpecies = repmat(species',1,length(patches));
 gridPatches = repmat(patches,length(species),1);
 mesh(gridSpecies,gridPatches,avgEig)
