@@ -3,17 +3,19 @@
 #saveJacobians4C(numOfSims,N,PN,Sp,s,r,mu,distA,distB)
 
 numSims=100
-Sp=10
+Sp=15
 s=1
 r=1
 mu=0.1
-arrSpecies=(2 3 5 7 10 12 15 18 20)
-arrPatches=(2 3 5 7 10 12 15 18 20)
-distA="uniform"
-distM="uniform"
+arrSpecies=(2 3 5 8 10 12 15)
+arrPatches=(2 3 5 8 10 12 15)
+distA="UNIFORM"
+distM="UNIFORM"
 subs="_"
+SPstr="_SP_"
 distAPass="'$distA'"
 distMPass="'$distM'"
+
 
 cd /Users/burcu/Desktop/
 mkdir JacobianData
@@ -34,7 +36,7 @@ c++ -std=c++11 main.cpp -o exe -I/usr/local/include -L/usr/local/lib -lgsl -lgsl
 
 root0=/Users/burcu/Desktop/DATA/
 cd $root0
-foldernameDist=$distA$subs$distM
+foldernameDist=$distA$subs$distM$SPstr${Sp}
 mkdir $foldernameDist
 cd $root0$foldernameDist
 
@@ -59,4 +61,10 @@ done
 done
 
 rm -r /Users/burcu/Desktop/JacobianData/*
+
+cd /Users/burcu/Desktop/CSSS17/MATLAB
+matlabFileName="'$distA$subs$distM$SPstr${Sp}'"
+matlab -nodisplay -nodesktop -nojvm -r "try readAndSaveData(${matlabFileName},${s},${r},${mu}); catch; end; quit"
+
+rm -r /Users/burcu/Desktop/DATA/*
 
