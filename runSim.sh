@@ -7,8 +7,8 @@ Sp=15
 s=1
 r=1
 mu=0.1
-arrSpecies=(2 3 5 8 10 12 15)
-arrPatches=(2 3 5 8 10 12 15)
+arrSpecies=(2 3	4 5	6 7	8 9	10 11 12 13	14 15)
+arrPatches=(2 3	4 5	6 7	8 9	10 11 12 13	14 15)
 distA="UNIFORM"
 distM="UNIFORM"
 subs="_"
@@ -52,7 +52,6 @@ mkdir $foldername
 cd $root0$foldernameDist/$foldername
 mkdir EigenData
 mkdir EigenMax
-mkdir MetaData
 directory="${root0}/${foldernameDist}/${foldername}/"
 cd /Users/burcu/Desktop/CSSS17/C++/conjStability/conjStability
 ./exe $numSims $directory $patch $species $Sp $s $r $mu &  PID=$!
