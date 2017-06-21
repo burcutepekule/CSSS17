@@ -35,7 +35,7 @@ done
 done
 
 
-cd /Users/burcu/Desktop/CSSS17/C++/conjStability/conjStability
+cd /Users/burcu/Desktop/CSSS17/cpp
 c++ -std=c++11 main.cpp -o exe -I/usr/local/include -I/usr/local/Cellar/eigen/3.3.3/include/eigen3 -I/usr/burcu -L/usr/local/lib -lgsl -lgslcblas
 
 root0=/Users/burcu/Desktop/SIM_${last}/DATA/
@@ -55,7 +55,7 @@ cd $root0$foldernameDist/$foldername
 #mkdir EigenData
 mkdir EigenMax
 directory="${root0}/${foldernameDist}/${foldername}/"
-cd /Users/burcu/Desktop/CSSS17/C++/conjStability/conjStability
+cd /Users/burcu/Desktop/CSSS17/cpp
 ./exe $numSims $directory $patch $species $Sp $s $r $mu $last &  PID=$!
 wait $PID
 done
