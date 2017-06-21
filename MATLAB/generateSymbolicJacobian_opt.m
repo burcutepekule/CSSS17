@@ -1,8 +1,9 @@
-function [J,Jfunc] = generateSymbolicJacobian_opt(N,PN,s,r)
+function [J,Jfunc] = generateSymbolicJacobian_opt(N,PN)
 A = sym('a%d_%d_%d', [N N PN]);
 X = sym('x%d_%d', [N PN]);
 M = sym('m%d_%d_%d', [N PN PN]);
 syms sum01 sum02 sum03
+syms r s 
 for i=1:N
     for l=1:PN
         sum01=0; sum02=0; sum03=0;
@@ -24,10 +25,8 @@ for i=1:N
         eqnVec = [eqnVec eqn{i,l}];
     end
 end
-% Asyms = reshape(A(:),[],1);
-% Msyms = reshape(M(:),[],1);
-% Xsyms = reshape(X(:),[],1);
+filename   = ['jacob_' num2str(N) '_' num2str(PN)];
 J          = jacobian(eqnVec,reshape(transpose(X),1,N*PN));
-Jfunc      = matlabFunction(J,'File','jacob');
+Jfunc      = matlabFunction(J,'File',filename);
 end
 

@@ -2,17 +2,15 @@
 
 #saveJacobians4C(numOfSims,N,PN,Sp,s,r,mu,distA,distB)
 timestamp=`date +%s` $*
-last=${timestamp: -6}
+last=${timestamp: -5}
 
-numSims=100
-Sp=10
-s=1
+numSims=20
+Sp=10 #MAX ABUNDANCE IN INITIAL CONDITIONS
+s=2
 r=1
 mu=0.1
-#arrSpecies=(2 3 4 5 6 7 8 9 10 11 12 13 14 15)
-#arrPatches=(2 3 4 5 6 7 8 9 10 11 12 13 14 15)
-arrSpecies=(2 3 5 7 10 12)
-arrPatches=(2 3 5 7 10 12)
+arrSpecies=(2 5 8 12 15)
+arrPatches=(2 5 8 12 15)
 distA="UNIFORM"
 distM="UNIFORM"
 subs="_"
@@ -38,7 +36,7 @@ done
 
 
 cd /Users/burcu/Desktop/CSSS17/C++/conjStability/conjStability
-c++ -std=c++11 main.cpp -o exe -I/usr/local/include -L/usr/local/lib -lgsl -lgslcblas
+c++ -std=c++11 main.cpp -o exe -I/usr/local/include -I/usr/local/Cellar/eigen/3.3.3/include/eigen3 -I/usr/burcu -L/usr/local/lib -lgsl -lgslcblas
 
 root0=/Users/burcu/Desktop/SIM_${last}/DATA/
 cd $root0
@@ -50,13 +48,11 @@ for species in ${arrSpecies[*]}
 do
 for patch in ${arrPatches[*]}
 do
-#root1=/Users/burcu/Desktop/CSSS17/DATA/$distA_$distM/
-#cd $root1
 cd $root0$foldernameDist
 foldername=S_${species}_P_${patch}
 mkdir $foldername
 cd $root0$foldernameDist/$foldername
-mkdir EigenData
+#mkdir EigenData
 mkdir EigenMax
 directory="${root0}/${foldernameDist}/${foldername}/"
 cd /Users/burcu/Desktop/CSSS17/C++/conjStability/conjStability
