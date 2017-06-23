@@ -47,69 +47,66 @@ We consider meta-community stability in the context of the degree distribution f
 \subsection*{Questions}
 
 \begin{itemize}
-\item \textbf{mutation-selection balance} How does the entropy change as a function of 1) mutation rate, 2) dispersal rate, 3) selection gradient, 4) dispersal network structure
+\item \textbf{mutation-selection balance} How does the entropy distribution change as a function of 1) mutation rate, 2) dispersal rate, 3) selection gradient ($\alpha\delta r$), 4) dispersal network structure (degree distribution), 
 
-\item \textbf{}
-
-\item \textbf{}
-
-
-\item \textbf{Dispersal network degree distribution} Effect of exp() vs. N() after integrating over interaction networks
-\item \textbf{Is `few strong many weak` robust to dispersal network structure?} Are other interaction networks more robust for particular dispersal networks? 
-\item \textbf{Complexity versus stability relationship for different network structure?} Meta-community stability versus \# of species for different degree distributions
-\item \textbf{Stability parameter space for particular degree distributions} e.g. stability  as a function of $\alpha_a = \alpha_m$.
-\item \textbf{Mutualism vs. antagonism} Mutualism means that interaction coefficients are positive for both interacting species, and antagonism means one is positive and one is negative
+\item \textbf{Species interactions} Is `few strong many weak` robust to dispersal network structure? Are other interaction networks more robust for particular dispersal networks? Mutualism vs. antagonism; conjugate interaction-dispersal matrix pairs
+\item \textbf{Complexity versus stability}
 \end{itemize}
 
-\section*{Binary sequences}
+\subsection*{Binary sequences}
 \begin{align*}
-x_{000} &= [0,0,0]\\
-x_{001} &= [0,0,1]\\
+X_{000} &= [0,0,0]\\
+X_{001} &= [0,0,1]\\
 \vdots \\
-x_{111} &= [1,1,1]\\
+X_{111} &= [1,1,1]\\
 \end{align*}
 
-With three 
+With three bits we have $2^n$ sequences.
 
-We consider the following degree distributions
+
+\subsection*{Governing ordinary differential equation}
+
+The governing ODE for the logistic quasispecies on a dispersal network is as follows 
+
+\[ \frac{dx_{i}^{l}}{dt} = r_i^l x_i^l\left(1 - \Sigma x^l\right) 
+		 + \sum_{\substack{j\\j \neq i}}^N q_0^{h(i,j)}x_j^l
+		 - \sum_{\substack{j\\j \neq i}}^N q_0^{h(i,j)}x_i^l
+		 + \sum_{\substack{k\\k \neq l}}^{P}m_{i}^{k \rightarrow l}x_{i}^{k}		
+		 -  \sum_{\substack{k\\l \neq k}}^{P}m_{i}^{l \rightarrow k} x_{i}^{l} \] 
+
+with parameters and state variable symbols defined in Table X. 
+
 \begin{table}[!h]
 \centering
+   \caption{Parameter and state variance definitions for the governing ODE} 
 \begin{tabular}{lll}
- & Community (A) & Dispersal (M)  \\
- & $\sim U(-1,1)$ & $\sim U(-1,1)$  \\
- & $\sim U(-1,1)$ & $\sim \exp(\alpha_m)$  \\
- & $\sim \exp(\alpha_a)$ & $\sim U(-1,1)$  \\
- & $\sim \exp(\alpha_a)$ & $\sim \exp(\alpha_m)$
+ \textbf{Symbol} &  \textbf{Definition}  \\
+ $r_i^l$           & intrinsic growth rate  \\
+ $x_i^l$          & concentration of sequence $i$ in patch $l$  \\
+ $\Sigma x^l $ & total sequence abundance in path $i$  \\
+ $q_0$            & mutation probability  per bit\\
+ $h(i,j)$           & Hamming distance between sequences $i$ and $j$\\
+ $N$               & Number of unique sequences per patch \\
+ $m_i^{h\rightarrow l}$ & dispersal rate of species $i$ from patch $k$ to $l$\\
+ $P$  & number of patches 
 \end{tabular}
 \end{table}
-\begin{itemize}
-\item \textbf{Aim $\#2$: } Stability as a linear or a non-linear function of parameters : When both matricies are exponentially distributed with $\alpha_a$ and $\alpha_m$, how does stability change as a multiplicative / additive function of the $\{\alpha_a,\alpha_m\}$ pair?
-\item \textbf{Aim $\#3$: } Generalization : Find conjugate interaction-dispersal matrix pairs that optimizes the stability of a food web.
-\item \textbf{Aim $\#4$: } Validation : Can we use real data sets do validate the stability of the conjugate pairs?
-\item \textbf{Aim $\#5$: } Future work :  Abundance vector, source and sink added to the system, perturbation in abundance.
-\item [] \textbf{Parameter Definitions}
-\item $N$ : Number of species.
-\item $P_N$ : Number of patches (habitats). 
-\item $X_{i}^{l}$ : Abundance of species $i$ in patch $l$.
-\item $a_{ij}^{l}$ : Interaction coefficient between species $i$ and species $j$ in patch $l$.
-\item $m_{i}^{l \rightarrow k}$ : Migration coefficient of species $i$ from patch $l$ to patch $k$.
-\item [] \textbf{Simulation Rules}
-\item Dispersal is symmetric, i.e.,  $m_{i}^{l \rightarrow k}=m_{i}^{k \rightarrow l}$
-\item Same species have the same dispersal rate, i.e., $m_{i}^{l \rightarrow k} = m_{i}\,\, \forall k, l.$
-\item Initial Conditions : Each patch is identical, and abundance of species are randomly drawn.
-\end{itemize}
 
+We write the equation in matrix-vector notation
+\[ \frac{d \mathbf{x}}{dt} = \mathbf{R\Sigma x}  
+		 + \mathbf{Qx}
+		 + \mathbf{Mx}\] 
+		 
+where
+\[ \mathbf{R} = \begin{bmatrix}
+    r_1^1 & 0        & \dots & \dots & \dots & 0  \\
+           0 & r_1^2 & \ddots & \ddots & \ddots & 0 \\
+   \vdots & \ddots & \ddots & \ddots & \ddots & \vdots \\
+   \vdots & \ddots & \ddots &  r_2^1 & \ddots & \vdots  \\
+   \vdots 
+           0 &        0 &  \dots  & \dots & r_N^P \\ \end{bmatrix} \]
 
-Meta-community dynamics
-
-The governing ODE for the Lotka-Volterra predator prey equations (i.e. \textit{the mass action equations}) on a dispersal network is as follows 
-
-\[ \frac{dX_{i}^{l}}{dt} = r_i^l X_i^l 
-		 + \sum_{j=1}^{N}a_{ij}^{l}X_{i}^{l}X_{j}^{l} 
-		 + \sum_{\substack{k=1\\k \neq l}}^{P}m_{i}^{k \rightarrow l}X_{i}^{k}		
-		 -  \sum_{\substack{k=1\\l \neq k}}^{P}m_{i}^{l \rightarrow k} X_{i}^{l} \] 
-
-
+\subsection*{The Jacobian matrix}
 For the purpose of notation, we define
 \[ \frac{dX_{i}^{l}}{dt} \equiv f(X_{i}^{l}). \]
 

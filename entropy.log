@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  23 JUN 2017 10:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  23 JUN 2017 14:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**gdraft.tex
-(./gdraft.tex
+**entropy.tex
+(./entropy.tex
 LaTeX2e <2017-04-15>
 Babel <3.10> and hyphenation patterns for 84 language(s) loaded.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/article.cls
@@ -302,8 +302,8 @@ Package caption3 Info: TeX engine: e-TeX on input line 67.
 )
 \c@ContinuedFloat=\count124
 )
-(./gdraft.aux)
-\openout1 = `gdraft.aux'.
+(./entropy.aux)
+\openout1 = `entropy.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
 LaTeX Font Info:    ... okay on input line 40.
@@ -444,62 +444,60 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
 
-LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 154.
+LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 151.
 
 
 
-LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 154.
+LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 151.
 
 
 
-Overfull \hbox (69.9382pt too wide) in paragraph at lines 154--154
+Overfull \hbox (69.9382pt too wide) in paragraph at lines 151--151
+[] 
+ []
+
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 170.
+
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 170.
+
+
+Overfull \hbox (24.00473pt too wide) in paragraph at lines 170--170
 [] 
  []
 
 [3]
-
-LaTeX Font Warning: Command \small invalid in math mode on input line 173.
-
-
-LaTeX Font Warning: Command \small invalid in math mode on input line 173.
-
-
-Overfull \hbox (24.00473pt too wide) in paragraph at lines 173--173
-[] 
- []
-
-[4]
-No file gdraft.bbl.
-[5] (./gdraft.aux) ) 
+No file entropy.bbl.
+[4] (./entropy.aux) ) 
 Here is how much of TeX's memory you used:
- 6177 strings out of 492995
- 93382 string characters out of 6132704
- 193221 words of memory out of 5000000
- 9598 multiletter control sequences out of 15000+600000
- 21696 words of font info for 80 fonts, out of 8000000 for 9000
+ 6175 strings out of 492995
+ 93359 string characters out of 6132704
+ 196221 words of memory out of 5000000
+ 9597 multiletter control sequences out of 15000+600000
+ 20743 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,16n,39p,380b,256s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmbx6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmbx8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmex10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmmi6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-0.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.
-pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pf
-b></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></us
-r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
-/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/l
-ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/loc
-al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on gdraft.pdf (5 pages, 179824 bytes).
+ 39i,16n,39p,381b,256s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmbx6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmbx8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmex10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmmi12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mmi8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12
+.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.p
+fb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb>
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
+r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/
+local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on entropy.pdf (4 pages, 168697 bytes).
 PDF statistics:
- 88 PDF objects out of 1000 (max. 8388607)
- 63 compressed objects within 1 object stream
+ 81 PDF objects out of 1000 (max. 8388607)
+ 58 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
