@@ -1,4 +1,4 @@
-function dydt = odefcn(x,Ares,Mres,N,PN,s,r)
+function dydt = odefcn(x,Ares,Mres,N,PN,sVec,rVec)
 dydt = zeros(N*PN,1);
 indx = 1;
 %LINEARIZE X VECTOR!
@@ -17,7 +17,7 @@ for i=1:N
             sum03=sum03+double(Mres(i,k,l))*x((i-1)*PN+k);
         end
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        dydt(indx) = r*x((i-1)*PN+l)-s*x((i-1)*PN+l)*x((i-1)*PN+l)+x((i-1)*PN+l)*sum01-x((i-1)*PN+l)*sum02+sum03;
+        dydt(indx) = rVec((i-1)*PN+l)*x((i-1)*PN+l)-sVec((i-1)*PN+l)*x((i-1)*PN+l)*x((i-1)*PN+l)+x((i-1)*PN+l)*sum01-x((i-1)*PN+l)*sum02+sum03;
         indx = indx+1;
     end
 end

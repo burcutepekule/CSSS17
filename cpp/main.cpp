@@ -107,17 +107,13 @@ int main (int argc, char **argv)
     int numOfSims = atoi(argv[1]);
     string directory = argv[2];
     //$patch $species $Sp $s $r $mu
-    int patch = atoi(argv[3]);
-    int species = atoi(argv[4]);
-    int Sp = atoi(argv[5]);
-    int s  = atoi(argv[6]);
-    int r  = atoi(argv[7]);
-    double mu = atof(argv[8]);
-    int timeStp = atoi(argv[9]);
-    
+    int numBits = atoi(argv[3]);
+    int timeStp = atoi(argv[4]);
+    string usrname = argv[5];
+
     
     for(int simIdx=0;simIdx<numOfSims;simIdx++){
-        string fileName= "/Users/burcu/Desktop/SIM_" +to_string(timeStp) + "/JacobianData/J_S_" + to_string(species) + "_P_" + to_string(patch) + "/J_" + to_string(simIdx) + ".txt";
+        string fileName= "/Users/" + usrname + "/Desktop/SIM_" +to_string(timeStp) + "/JacobianData/J_BITS_" + to_string(numBits) + "/J_" + to_string(simIdx) + ".txt";
         
         int number_of_lines = 0;
         
