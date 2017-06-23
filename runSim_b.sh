@@ -4,13 +4,13 @@
 timestamp=`date +%s` $*
 last=${timestamp: -5}
 
-numSims=20
+numSims=100
 Sp=10 #MAX ABUNDANCE IN INITIAL CONDITIONS
 s=2
 r=1
 mu=0.1
-arrSpecies=(2 5 8 12 15)
-arrPatches=(2 5 8 12 15)
+arrSpecies=(2 3 4 5 6 7 8 9 10 11 12 13 14 15 18 20)
+arrPatches=(2 3 4 5 6 7 8 9 10 11 12 13 14 15 18 20)
 distA="UNIFORM"
 distM="UNIFORM"
 subs="_"
