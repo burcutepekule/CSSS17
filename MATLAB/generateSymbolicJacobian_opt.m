@@ -1,31 +1,22 @@
-function [J,Jfunc] = generateSymbolicJacobian_opt(N,PN,s,Sp)
-% N  = 2; % Num of Species
-% PN = 3; % Num of Patches
-A = sym('a%d%d_%d', [N N PN]);
+function [J,Jfunc] = generateSymbolicJacobian_opt(N,PN)
+A = sym('a%d_%d_%d', [N N PN]);
 X = sym('x%d_%d', [N PN]);
-M = sym('m%d_%d%d', [N PN PN]);
-<<<<<<< HEAD:MATLAB/generateSymbolicJacobian.m~
-s = 0.8; %choses randomly from U[0,1] in the paper. Set it to constant for all species
-=======
-% Parameter r is calculated for the null model such that the species is not
-% interacting nor dispersing dX/dt = 0 -> rX=sX^2 -> r = sX
-r = s*Sp;
-% s = 0.8; %choses randomly from U[0,1] in the paper. Set it to constant for all species
->>>>>>> f94b8f61a4fc6645386f1ed70ad9062aebc201b6:MATLAB/generateSymbolicJacobian_opt.m
+M = sym('m%d_%d_%d', [N PN PN]);
 syms sum01 sum02 sum03
-for i=1:N  %loop through species
-    for l=1:PN  %loop through patches
+syms r s 
+for i=1:N
+    for l=1:PN
         sum01=0; sum02=0; sum03=0;
-        for j=1:N
-            sum01=sum01+A(i,j,l)*X(j,l); %within a patch, interactions terms given by a_j*x_j
+        for k=1:N
+            sum01=sum01+A(i,k,l)*X(k,l);
         end
         for k=1:PN
-            sum02=sum02+M(i,l,k);        %emigration from patches
+            sum02=sum02+M(i,l,k);
         end
         for k=1:PN
-            sum03=sum03+M(i,k,l)*X(i,k); %immigration to patches
+            sum03=sum03+M(i,k,l)*X(i,k);
         end
-        eqn{i,l} = r*X(i,l)+X(i,l)*sum01-s*X(i,l)*X(i,l)-X(i,l)*sum02+sum03;
+        eqn{i,l} = r*X(i,l)-s*X(i,l)*X(i,l)+X(i,l)*sum01-X(i,l)*sum02+sum03;
     end
 end
 eqnVec = [];
@@ -34,7 +25,8 @@ for i=1:N
         eqnVec = [eqnVec eqn{i,l}];
     end
 end
-J     = jacobian(eqnVec,reshape(X,1,N*PN));
-Jfunc = matlabFunction(J,'File','jacob');
+filename   = ['jacob_' num2str(N) '_' num2str(PN)];
+J          = jacobian(eqnVec,reshape(transpose(X),1,N*PN));
+Jfunc      = matlabFunction(J,'File',filename);
 end
 

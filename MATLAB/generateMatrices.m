@@ -24,16 +24,12 @@ for sims=1:numOfSims
     for k=1:N
         for j=1:N
             if(k==j)
-                A(k,j,:)=s; % set a_ii equal to the s term!
+                A(k,j,:)=-s; % set a_ii equal to the s term!
             else
                 if(double(strcmp(distA,'uniform'))==1)
                     dum = -1+2*rand(1,1); % UNIFORM DISTRIBUTION
                 elseif(double(strcmp(distA,'exponential'))==1)
-<<<<<<< HEAD
-                    dum = exprnd(mu);
-=======
                      dum = exprnd(mu);
->>>>>>> f94b8f61a4fc6645386f1ed70ad9062aebc201b6
                 elseif(double(strcmp(distA,'normal'))==1)
                     dum = randn;
                 elseif(double(strcmp(distA,'zero'))==1)
