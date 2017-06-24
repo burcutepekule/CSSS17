@@ -6,7 +6,7 @@ histogram(maxEig)
 xlabel('Maximum Eigenvalue')
 ylabel('Frequency')
 title('Dispersal Off')
-load('DATA_UNIFORM_UNIFORM_SP_10_TS_92065')
+load('DATA_UNIFORM_UNIFORM_SP_10_TS_92575')
 figure
 histogram(maxEig)
 xlabel('Maximum Eigenvalue')
