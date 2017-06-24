@@ -22,7 +22,7 @@ for i=1:N
         end
         % MUTATION PART
         for k=1:N
-            sum04=sum04-Q(i,k)*X(k,l)+Q(k,i)*X(i,l);
+            sum04=sum04-Q(i,k)*X(i,l)+Q(k,i)*X(k,l);
         end
         eqn{i,l} = R(i,l)*X(i,l)-S(i,l)*X(i,l)*X(i,l)+X(i,l)*sum01-X(i,l)*sum02+sum03+sum04;
     end

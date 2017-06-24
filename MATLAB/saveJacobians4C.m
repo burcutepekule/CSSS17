@@ -30,11 +30,13 @@ if (exist(funcName, 'file') ~= 2)
 end
 mkdir(['/Users/' usrname '/Desktop/SIM_' num2str(timeStamp) '/JacobianData/J_BITS_' num2str(numBits)]);
 sims = 1;
-tspan = [0 100];
+tspan = [0 500];
 y0    = 1+randi(10,1,N*PN); %at least 1
 tol   = 10^-5*ones(1,N*PN);
 while (sims<=numOfSims)
-    [M,A] = generateMatrices(N,PN,mu,distA,distM);    
+    [M,A] = generateMatrices(N,PN,mu,distA,distM); 
+    M=1.*M;
+    A=1.*A; %A's are too big appearently 
     [~,y] = generateNumericODE(N,PN,sVec,rVec,qMat,A,M,y0,tspan);
     % WHEN THE POPULATIONS GET EXPLODED, REASON IS S IS TOO SMALL
     % THAT'S WHY IN THE PAPER THEY SET THE r SUCH THAT dX/dt=0
@@ -45,7 +47,7 @@ while (sims<=numOfSims)
     if(sum(varIny<tol)==N*PN)
         filename  = ['/Users/' usrname '/Desktop/SIM_' num2str(timeStamp) '/JacobianData/J_BITS_' num2str(numBits) '/J_' num2str(sims-1) '.txt'];
         X = y(end,:);
-        inputArr=num2cell([A(:)' M(:)' rVec sVec qVec X]);
+        inputArr=num2cell([A(:)' M(:)' qVec rVec sVec  X]);
         fh = str2func(funcName);
         J_out=fh(inputArr{:});
         saveArr2txt(J_out,filename);

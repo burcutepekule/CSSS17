@@ -1,0 +1,24 @@
+
+set(0,'DefaultAxesFontSize',14)
+clear all;close all;clc;
+figure
+subfigure(2,2,1)
+load('DATA_ZERO_ZERO_MUT_ON')
+hist(maxEig)
+xlabel('Maximum Eigenvalue')
+ylabel('Frequency')
+title('A: ZERO M: ZERO MUTATIONS: ON')
+
+subfigure(2,2,2)
+load('DATA_UNIFORM_ZERO_MUT_ON')
+hist(maxEig)
+xlabel('Maximum Eigenvalue')
+ylabel('Frequency')
+title('A: UNIFORM M: ZERO MUTATIONS: ON')
+
+subfigure(2,2,3)
+load('DATA_ZERO_UNIFORM_MUT_ON')
+hist(maxEig)
+xlabel('Maximum Eigenvalue')
+ylabel('Frequency')
+title('A: ZERO M: UNIFORM MUTATIONS: ON')

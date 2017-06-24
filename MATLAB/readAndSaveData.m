@@ -1,4 +1,4 @@
-function [ ] = readAndSaveData(folderName,timeStamp,mu,rMax,rMin,rMid,hamD,usrname)
+function [ ] = readAndSaveData(folderName,timeStamp,rNormVec,rOffset,alp,mu,q,usrname)
 % folderName = 'uniform_uniform_SP_2';
 directory=['/Users/' usrname '/Desktop/SIM_' num2str(timeStamp) '/DATA/' folderName '/'];
 D = dir([directory,'/S*']);
@@ -44,12 +44,17 @@ end
 for i=1:length(bits)
     avgEig(i)=mean(maxEig(i,:));
 end
-file2save = ['DATA_' folderName '_TS_'  num2str(timeStamp)];
-assignin('caller','rMax', rMax)
-assignin('caller','rMin', rMin)
-assignin('caller','rMid', rMid)
-assignin('caller','hamD', hamD)
+% file2save = ['DATA_' folderName '_TS_'  num2str(timeStamp)];
+if (q==0)
+    file2save = ['DATA_' folderName '_MUT_OFF'];
+else
+    file2save = ['DATA_' folderName '_MUT_ON'];
+end
+assignin('caller','rNormVec', rNormVec)
+assignin('caller','rOffset', rOffset)
+assignin('caller','alp', alp)
 assignin('caller','mu', mu)
+assignin('caller','q', q)
 save(file2save)
 end
 
