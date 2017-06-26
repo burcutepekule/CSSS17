@@ -4,7 +4,7 @@
 \usepackage{amsmath,amsfonts,amsthm,bm}
 \usepackage[english]{isodate}
 \usepackage[final]{pdfpages}
-\usepackage{graphicx}
+\usepackage{graphicx} 
 \usepackage{breakcites}
 \usepackage{mathtools}
 \usepackage[displaymath, mathlines]{lineno}
@@ -33,7 +33,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Evolutionary Dynamics on Dispersal Networks}
+\title{Controls on genotype entropy in dispersive environments}
 \author{\small{Burcu Tepekule, Gregory Britten}}
 \date{\small{\printdayoff\today}}
 
@@ -42,8 +42,16 @@
 %\linenumbers
 
 \subsection*{Abstract}
-We consider meta-community stability in the context of the degree distribution for meta-community dispersal networks. In particular we characterize meta-community stability for the case of symmetric and heavy-tailed degree distributions for intra-community interactions (May's community matrix) and the coupled dispersal network in the meta-community generalization. 
+Motivated by models of marine microbial diversity, we investigate the forces acting on the distribution of genotypes in a dispersive environment. Integrating patch dynamics and mutator-replicator theory, we demonstrate the opposing forces of dispersal, selection, and mutation controlling the distribution of genotypes across connected environments of variable fitness. 
 
+Hypotheses: local Shannon entropy is controlled by the following forces:
+\begin{itemize}
+\item \textbf{Selection acting to reduce local entropy via competitive exclusion}. At zero dispersal with no mutation, species in isolated environments approach competitive exclusion with the most fit genotypes approaching fixation.  
+\item \textbf{Mutation generates entropy within-environments}. Mutation leads to survival of the flattest.
+\item \textbf{Dispersal mixes entropy across environments}. Infinite dispersal with  or without mutation collapses the meta-environmental structure and leads to competitive exclusion with respect to the mean environment, or also complete neutrality in the 'no free lunch' scenario. At intermediate dispersal, a mutation-selection-dispersal balance emerges wherein suboptimal genotype distributions arise due to mixing of environments. High dispersal leads to survival of the flattest. 
+\end{itemize}
+
+Throughout the paper we characterize genotype distributions in terms of the Shannon entropy within and across environments.
 \subsection*{Questions}
 
 \begin{itemize}
@@ -68,9 +76,9 @@ With three bits we have $2^n$ sequences.
 
 The governing ODE for the logistic quasispecies on a dispersal network is as follows 
 
-\[ \frac{dx_{i}^{l}}{dt} = r_i^l x_i^l\left(1 - \Sigma x^l\right) 
-		 + \sum_{\substack{j\\j \neq i}}^N q_0^{h(i,j)}x_j^l
-		 - \sum_{\substack{j\\j \neq i}}^N q_0^{h(i,j)}x_i^l
+\[ \frac{dx_{i}^{l}}{dt} = r_i^l x_i^l\left(1 - \frac{\Sigma x^l}{k_i^l}\right) 
+		 + \sum_{\substack{j\\j \neq i}}^N q^{h(i,j)}x_j^l
+		 - \sum_{\substack{j\\j \neq i}}^N q^{h(i,j)}x_i^l
 		 + \sum_{\substack{k\\k \neq l}}^{P}m_{i}^{k \rightarrow l}x_{i}^{k}		
 		 -  \sum_{\substack{k\\l \neq k}}^{P}m_{i}^{l \rightarrow k} x_{i}^{l} \] 
 
@@ -82,9 +90,10 @@ with parameters and state variable symbols defined in Table X.
 \begin{tabular}{lll}
  \textbf{Symbol} &  \textbf{Definition}  \\
  $r_i^l$           & intrinsic growth rate  \\
- $x_i^l$          & concentration of sequence $i$ in patch $l$  \\
- $\Sigma x^l $ & total sequence abundance in path $i$  \\
- $q_0$            & mutation probability  per bit\\
+ $x_i^l$          & concentration of sequence $i$ in environment $l$  \\
+ $\Sigma x^l $ & total sequence abundance in environment $l$  \\
+ $k_i^l$      & carrying capacity of species $i$ in environment $l$ \\ 
+ $q$            & mutation probability  per bit\\
  $h(i,j)$           & Hamming distance between sequences $i$ and $j$\\
  $N$               & Number of unique sequences per patch \\
  $m_i^{h\rightarrow l}$ & dispersal rate of species $i$ from patch $k$ to $l$\\
@@ -92,7 +101,7 @@ with parameters and state variable symbols defined in Table X.
 \end{tabular}
 \end{table}
 
-We write the equation in matrix-vector notation
+We write the system of ODEs in matrix-vector notation
 \[ \frac{d \mathbf{x}}{dt} = \mathbf{R\Sigma x}  
 		 + \mathbf{Qx}
 		 + \mathbf{Mx}\] 
@@ -100,67 +109,118 @@ We write the equation in matrix-vector notation
 where
 \[ \mathbf{R} = \begin{bmatrix}
     r_1^1 & 0        & \dots & \dots & \dots & 0  \\
-           0 & r_1^2 & \ddots & \ddots & \ddots & 0 \\
+           0 & r_2^1 & \ddots & \ddots & \ddots & 0 \\
    \vdots & \ddots & \ddots & \ddots & \ddots & \vdots \\
-   \vdots & \ddots & \ddots &  r_2^1 & \ddots & \vdots  \\
-   \vdots 
-           0 &        0 &  \dots  & \dots & r_N^P \\ \end{bmatrix} \]
+   \vdots & \ddots & \ddots &  r_1^2 & \ddots & \vdots  \\
+   \vdots & \ddots & \ddots & \ddots & \ddots   & \vdots \\
+           0 &         0 &  \dots  & \dots  & \dots & r_N^P \\ \end{bmatrix} \]
+           
+\[ \mathbf{\Sigma} = \begin{bmatrix}
+    (1-\frac{\Sigma x^1}{k_1^1}) & 0        & \dots & \dots & \dots & 0  \\
+           0 & (1-\frac{\Sigma x^1}{k_2^1}) & \ddots & \ddots & \ddots & 0 \\
+   \vdots & \ddots & \ddots & \ddots & \ddots & \vdots \\
+   \vdots & \ddots & \ddots &  (1-\frac{\Sigma x^2}{k_1^2}) & \ddots & \vdots  \\
+   \vdots & \ddots & \ddots & \ddots & \ddots   & \vdots \\
+           0 &         0 &  \dots  & \dots  & \dots & (1-\frac{\Sigma x^P}{k_N^P}) \\ \end{bmatrix} \]
+
+\[ \mathbf{Q} = \begin{bmatrix}
+    0 & q^{h(1,2)}  & \dots & q^{h(1,N)} & 0 & \dots & \dots & 0 & \dots & 0 \\
+ q^{h(2,1)} & 0   & \dots & q^{h(2,N)} & 0 & \dots & \dots & 0 & \dots & 0\\
+   \vdots & \vdots & \ddots & \vdots & \vdots   & \vdots & \vdots & \vdots & \dots & \vdots\\
+       q^{h(N,1)} &  q^{h(N,2)} &   \dots  & 0  & 0 & \dots & \dots & 0 & \dots & 0 \\ 
+       0 & 0 & \dots &  0 & 0 & q^{h(1,2)}  & \dots & q^{h(1,N)} & \dots & 0\\
+       0 & 0 & \dots &  0 & q^{h(2,1)} & 0 & \dots & q^{h(2,N)}&\dots&0\\
+        \vdots & \vdots & \vdots &  \vdots & \vdots & \vdots & \ddots & \vdots & \dots & \vdots\\
+          0 & 0 & \dots &  0 & q^{h(N,1)} & q^{h(N,2)} & \dots & 0 & \dots & 0\\	 
+          \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+          0 & 0 & \dots & 0 & 0 & 0 & \dots & 0 & \dots & 0\end{bmatrix}  \]
+
+with $h(i,j) = h(j,i)$, and 
+
+\[ \mathbf{M} = \begin{bmatrix}
+    -m_1^{1\rightarrow 2} & 0        & \dots & m_1^{2\rightarrow 1} & 0 & \dots & m_1^{3\rightarrow 1} & 0 & \dots & 0  \\
+           0 & -m_2^{1\rightarrow 2} & 0 & \dots & m_2^{2\rightarrow 1} & 0 &  \dots & m_2^{3\rightarrow 1} & \dots & 0 \\
+   \vdots & 0& \ddots & \ddots & \dots & \vdots \\
+   m_1^{1\rightarrow 2} & \vdots & \ddots &  -m^{} & \ddots & \vdots  \\
+   0 & \ddots & \ddots & \ddots & \ddots   & \vdots \\
+           0 &         0 &  \dots  & \dots  & \dots & (1-\Sigma x^P) \\ \end{bmatrix} \]
+
+\subsection*{Steady state analysis}
+For the purpose of notation, we define
+\[ \frac{dx_{i}^{l}}{dt} \equiv f(x_{i}^{l}). \]
 
 \subsection*{The Jacobian matrix}
-For the purpose of notation, we define
-\[ \frac{dX_{i}^{l}}{dt} \equiv f(X_{i}^{l}). \]
+\[ J_{i,j}^l = \frac{\partial f(x_i^l)}{\partial x_j^l}\Bigr|_{\substack{{x_i^l=x_i^l}^*\\{x_j^l=x_j^l}^*}}  \]
 
-The general Jacobian matrix for the meta-community dynamics is then
+The general Jacobian matrix is then
 \[ \mathbf{J} = \begin{bmatrix}
-    \frac{\partial f(X_1^1)}{\partial X_1^1} & \frac{\partial f(X_1^1)}{\partial X_2^1} & \dots & \frac{\partial f(X_1^1)}{\partial X_N^1}  &  \frac{\partial f(X_1^1)}{\partial X_1^2} & \frac{\partial f(X_1^1)}{\partial X_2^2} & \dots & \frac{\partial f(X_1^1)}{\partial X_N^{P}} \\ 
-    \frac{\partial f(X_2^1)}{\partial X_1^1} &  \frac{\partial f(X_2^1)}{\partial X_2^1} & \dots & \dots & \dots & \dots & \dots & \frac{\partial f(X_2^1)}{\partial X_N^P} \\
+    \frac{\partial f(x_1^1)}{\partial x_1^1} & \frac{\partial f(x_1^1)}{\partial x_2^1} & \dots & \frac{\partial f(x_1^1)}{\partial x_N^1}  &  \frac{\partial f(x_1^1)}{\partial x_1^2} & \frac{\partial f(x_1^1)}{\partial x_2^2} & \dots & \frac{\partial f(x_1^1)}{\partial x_N^{P}} \\ 
+    \frac{\partial f(x_2^1)}{\partial x_1^1} &  \frac{\partial f(x_2^1)}{\partial x_2^1} & \dots & \dots & \dots & \dots & \dots & \frac{\partial f(x_2^1)}{\partial X_N^P} \\
     \vdots    & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots\\
-    \frac{\partial f(X_N^1)}{\partial X_1^1} & \vdots   & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots \\
-    \frac{\partial f(X_1^2)}{\partial X_1^1} & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots \\
-    \frac{\partial f(X_2^2)}{\partial X_1^1} & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots\\
-    \vdots   & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \frac{\partial f(X_{N-1}^P)}{\partial X_N^P}\\
-    \frac{\partial f(X_N^P)}{\partial X_1^1} & \frac{\partial f(X_N^P)}{\partial X_1^2} & \dots & \dots & \dots & \dots & \frac{\partial f(X_N^P)}{\partial X_{N-1}^P} & \frac{\partial f(X_N^P)}{\partial X_N^P} \\    
+    \frac{\partial f(x_N^1)}{\partial x_1^1} & \vdots   & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots \\
+    \frac{\partial f(x_1^2)}{\partial x_1^1} & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots \\
+    \frac{\partial f(x_2^2)}{\partial x_1^1} & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \vdots\\
+    \vdots   & \vdots & \ddots  & \ddots & \ddots & \ddots & \ddots & \frac{\partial f(x_{N-1}^P)}{\partial x_N^P}\\
+    \frac{\partial f(x_N^P)}{\partial x_1^1} & \frac{\partial f(x_N^P)}{\partial x_1^2} & \dots & \dots & \dots & \dots & \frac{\partial f(x_N^P)}{\partial x_{N-1}^P} & \frac{\partial f(x_N^P)}{\partial x_N^P} \\    
 \end{bmatrix} \]
 
 where species $1:N$ in patch $l$ are stacked as the top rows, followed by species $1:N$ in patch $l+1$, and so on. 
 
-For the case $N = 2, P=2$ the equations are
+\subsection*{Equations for the case $N = 2, P=2$}
 
 \begin{align*}
-\frac{dX_1^1}{dt} &=  r_1^1 X_1^1 - a_1^1(X_1^1)^2 +  a_{1,2}^1X_1^1X_2^1 + m_1^{2\rightarrow 1} X_1^2 - m_1^{1\rightarrow 2} X_1^1\\
-\frac{dX_2^1}{dt} &=  r_2^1 X_2^1 - a_2^1 (X_2^1)^2 + a_{2,1}^1X_2^1X_1^1  + m_2^{2\rightarrow 1} X_2^2 - m_2^{1\rightarrow 2}X_2^1\\
-\frac{dX_1^2}{dt} &=  r_1^2 X_1^2 - a_1^2 (X_1^2)^2 + a_{1,2}^2X_1^2X_2^2 + m_1^{1\rightarrow 2}X_1^1 - m_1^{2\rightarrow 1}X_1^2 \\
-\frac{dX_2^2}{dt} &=  r_2^2 X_2^2 - a_2^2 (X_2^2)^2  + a_{2,1}^2X_2^2X_1^2 + m_2^{1\rightarrow 2} X_2^1 - m_2^{2\rightarrow 1} X_2^2\\
+\frac{dx_1^1}{dt} &=  r_1^1 x_1^1\left(1 - \frac{\Sigma x^1}{k_1^1}\right)  + qx_2^1 - qx_1^1+  m_1^{2\rightarrow 1} x_1^2 - m_1^{1\rightarrow 2} x_1^1\\
+\frac{dx_2^1}{dt} &= r_2^1 x_2^1\left(1 - \frac{\Sigma x^1}{k_2^1}\right) + qx_1^1 - qx_2^1 + m_2^{2\rightarrow 1} x_2^2 - m_2^{1\rightarrow 2}x_2^1\\
+\frac{dx_1^2}{dt} &=  r_1^2 x_1^2\left(1 - \frac{\Sigma x^2}{k_2^2}\right) + qx_2^2 - qx_2^1 + m_1^{1\rightarrow 2}x_1^1 - m_1^{2\rightarrow 1}x_1^2 \\
+\frac{dx_2^2}{dt} &=  r_2^2 x_2^2\left(1 - \frac{\Sigma x^2}{k_2^2}\right) + qx_1^2 - qx_2^2 + m_2^{1\rightarrow 2} x_2^1 - m_2^{2\rightarrow 1} x_2^2\\
 \end{align*}
 
 So the Jacobian is 
 
 \begin{align*}
 \mathbf{J} &= \begin{bmatrix}
-    \frac{\partial f(X_1^1)}{\partial X_1^1} & \frac{\partial f(X_1^1)}{\partial X_2^1} & \frac{\partial f(X_1^1)}{\partial X_1^2} & \frac{\partial f(X_1^1)}{\partial X_2^2}\\ 
-        \frac{\partial f(X_2^1)}{\partial X_1^1} & \frac{\partial f(X_2^1)}{\partial X_2^1} & \frac{\partial f(X_2^1)}{\partial X_1^2} & \frac{\partial f(X_2^1)}{\partial X_2^2}\\ 
-            \frac{\partial f(X_1^2)}{\partial X_1^1} & \frac{\partial f(X_1^2)}{\partial X_2^1} & \frac{\partial f(X_1^2)}{\partial X_1^2} & \frac{\partial f(X_1^2)}{\partial X_2^2}\\ 
-                \frac{\partial f(X_2^2)}{\partial X_1^1} & \frac{\partial f(X_2^2)}{\partial X_2^1} & \frac{\partial f(X_2^2)}{\partial X_1^2} & \frac{\partial f(X_2^2)}{\partial X_2^2} \\    
+    \frac{\partial f(x_1^1)}{\partial x_1^1} & \frac{\partial f(x_1^1)}{\partial x_2^1} & \frac{\partial f(x_1^1)}{\partial x_1^2} & \frac{\partial f(x_1^1)}{\partial x_2^2}\\ 
+        \frac{\partial f(x_2^1)}{\partial x_1^1} & \frac{\partial f(x_2^1)}{\partial x_2^1} & \frac{\partial f(x_2^1)}{\partial x_1^2} & \frac{\partial f(x_2^1)}{\partial x_2^2}\\ 
+            \frac{\partial f(x_1^2)}{\partial x_1^1} & \frac{\partial f(x_1^2)}{\partial x_2^1} & \frac{\partial f(x_1^2)}{\partial x_1^2} & \frac{\partial f(x_1^2)}{\partial x_2^2}\\ 
+                \frac{\partial f(x_2^2)}{\partial x_1^1} & \frac{\partial f(x_2^2)}{\partial x_2^1} & \frac{\partial f(x_2^2)}{\partial x_1^2} & \frac{\partial f(x_2^2)}{\partial x_2^2} \\    
 \end{bmatrix} \\
  &= \scriptsize{\begin{bmatrix}
-    r_1^1 - 2a_1^1X_1^1 + a_{1,2}^1X_2^1 - m_1^{1\rightarrow 2} &  a_{1,2}^1 X_1^1 & m_1^{2\rightarrow 1} & 0 \\ 
-    a_{1,2}^1X_2^1 & r_2^1 - 2a_2^1X_2^1 + a_{2,1}X_1^1 - m_2^{1\rightarrow 2} & 0 & m_2^{2\rightarrow 1} \\
-    m_1^{1\rightarrow 2} & 0 & r_1^2 -2a_1^2X_1^2 + a_{1,2}^2X_2^2  - m_1^{2\rightarrow 1}& a_{1,2}^2X_1^2 \\
-    0 & m_2^{1\rightarrow 2} & a_{2,1}^2X_2^2 & r_2^2 - 2a_2^2X_2^2 + a_{2,1}^2X_1^2-m_2^{2\rightarrow 1}\\       
+    r_1^1 - \frac{r_1^1}{k_1^1} \Sigma x^1 - q -  m_1^{1\rightarrow 2} &  
+    	q & 
+    		m_1^{2\rightarrow 1} & 
+    			0 \\ 
+    q & 
+    	r_2^1 - \frac{r_2^1}{k_2^1}\Sigma x^1 - q - m_2^{1\rightarrow 2} & 
+    		0 & 
+    			m_2^{2\rightarrow 1} \\
+    m_1^{1\rightarrow 2} & 
+    	0 & 
+    		r_1^2 - \frac{r_1^2}{k_1^2} \Sigma x^2 - q - m_1^{2\rightarrow 1}& 
+    			q \\
+    0 & 
+    	m_2^{1\rightarrow 2} & 
+    		q &
+    			r_2^2 - \frac{r_2^2}{k_2^2} \Sigma x^2 - q - m_2^{2\rightarrow 1} \\       
 \end{bmatrix} }
 \end{align*}
 
 We partition the Jacobian into intra-community interaction and meta-community dispersal components
-\[ \mathbf{J} = \mathbf{J_A} + \mathbf{J_M} \]
+\[ \mathbf{J} = \mathbf{J_{R\Sigma}} + \mathbf{J_Q} + \mathbf{J_M} \]
 
 where
 \begin{align*}
-\mathbf{J_A} &= \small{\begin{bmatrix}
-    r_1^1 - 2a_1^1X_1^1+a_{1,2}^1X_2^1 & a_{1,2}^1X_1^1 & 0 & 0 \\ 
-    a_{1,2}^1X_2^1 & r_2^1 - 2a_2^1X_2^1 + a_{2,1}X_1^1 & 0 & 0 \\
-    0 & 0 & r_1^2 -2a_1^2X_1^2 + a_{1,2}^2X_2^2  & a{1,2}^2X_1^2 \\
-    0 & 0 & a_{2,1}^2X_2^2 & r_2^2 - 2a_2^2X_2^2 + a_{2,1}^2X_1^2 \\       
+\mathbf{J_{R\Sigma}} &= \small{\begin{bmatrix}
+    r_1^1 - \frac{r_1}{k_1^1}^1\Sigma x^1 & 0 & 0 & 0 \\ 
+        0 & r_2^1 - \frac{r_2^1}{k_2^1} \Sigma x^1 & 0 & 0 \\
+    0 & 0 & r_1^2 - \frac{r_1^2}{k_1^2}\Sigma x^2 & 0 \\
+    0 & 0 & 0 & r_2^2 - \frac{r_2^2}{k_2^2} \Sigma x^2  \\       
 \end{bmatrix}} \\
+ \mathbf{J_Q} &= \begin{bmatrix}
+    0 & q^{h(1,2)} & 0 & 0 \\ 
+    q^{h(2,1)} & 0 & 0 & 0 \\
+    0 & 0 & 0 & q^{h(1,2)} \\
+    0 & 0 & q^{h(2,1)} & 0 \\       
+\end{bmatrix} \\
  \mathbf{J_M} &= \begin{bmatrix}
     -m_1^{1\rightarrow 2} & 0 & m_1^{2\rightarrow 1} & 0 \\ 
     0 & -m_2^{1\rightarrow 2}& 0 & m_2^{2\rightarrow 1} \\
@@ -169,33 +229,66 @@ where
 \end{bmatrix} 
 \end{align*}
 
-We can further decompose $\mathbf{J_M}$ into emigration and immigration networks
-\[ \mathbf{J_M} = \mathbf{J_{M_e}} + \mathbf{J_{M_i}} \] 
+\subsection*{Shannon diversity}
+Shannon diversity is simply the Shannon information entropy applied to the distribution of genotypes in the environment
+\[ H = -\sum_{l \in P} \sum_{i \in l} p^l_i \log p^l_i  -  sum \]
 
-where the emigration matrix is the diagonal matrix $\mathbf{J_{M_e}}$ and the immigration matrix $\mathbf{J_{M_i}}$ forms the off-diagonal terms. 
+where the $p_i^l \log p_i^l$ sum of is taken per genotype within environment $l$ and then taken with respect to the environmental mean and the 
 
-\subsection*{General community dynamics}
-For a general community dynamics model $g$ in detailed balance, 
-\[ \tilde{a}_{i,j}^l = \frac{\partial g(X_i^l)}{\partial X_j^l}\Bigr|_{\substack{{X_i^l=X_i^l}^*\\{X_j^l=X_j^l}^*}}  \]
+We consider the disaggegared Shannon diversity for within-environment and across-environment, respectively
+\[ H_w = -\sum_{i\in N} \langle p_i^l\rangle_l \log \langle p_i^l \rangle_l \]
+\[ H_b = -\sum_{l\in P} \langle p_i^l\rangle_i \log \langle p_i^l \rangle_i \]
 
-\subsection*{Degree distributions}
-Here we consider meta-community stability as a function of the probability distribution for the underlying network components. We are particularly interested in how dispersal network degree distribution models modulate the meta-community stability in the context of different intra-community interactions networks.
+\subsection*{Classical ANOVA decomposition}
+The within-between decomposition of entropy is made analogously to the classical ANOVA decomposition from statistics
+\begin{align*} 
+SS_{total} &= \sum_{l\in P} \sum_{i\in l}\left( x_i^l - \langle \langle x \rangle_i \rangle_l \right)^2 \\
+                &= \sum_{i\in l} \left( x_i^l - \langle x^l \rangle_i \right)^2 + \sum_{i\in N} \left( \langle x^l \rangle_i - \langle \langle x \rangle_i \rangle_l \right)^2 \\
+                &= SS_{within} + SS_{between}
+\end{align*}
 
-We make a distinction between the graphical structure of the interaction and dispersal networks, versus the structure of the resulting Jacobian at detailed balance. 
+Similar to entropy, the hypothesis is that mutation, dispersal, and selection all contribute uniquely to these terms. Via generation of within-environment variance, mutation positively drives $SS_{within}$ upward, while selection directly opposes mutation via mutation-selection balance. Dispersal, on the other hand, positively drives $SS_{within}$ by effectively converting $SS_{between}$ to $SS_{within}$. Note that $SS_{between}$ can only be generated by in this model by variation in selection among environments. 
 
-\subsubsection*{Dispersal networks}
-\subsubsection*{Interactions networks}
+\subsection*{Genetic drift and neutral mutations}
+Genetic drift is not included in this model, not the capacity for gene mutation to be selectively neutral and therefore contribute to genetic entropy. 
+
+\subsection*{Competitive exclusion}
+In a deterministic environment with no dispersal or mutation, the species with the highest carrying capacity (lowest R*)
+
+\begin{align*}
+\frac{dx_1}{dt} &= rx_1\left(1-\frac{\Sigma x}{k_1}\right)\\
+\frac{dx_2}{dt} &= rx_2\left(1-\frac{\Sigma x}{k_2}\right)\\
+\frac{dx_3}{dt} &= rx_3\left(1-\frac{\Sigma x}{k_3}\right)\\
+\end{align*}
+
+in which case the genotype with the largest $k$ will outcompete the others and go to fixation
+\[ t \rightarrow \infty\implies \frac{x_{\max{k}}}{\Sigma x} \rightarrow 1 \]
+
+and accordingly
+\[\frac{x_{\max{k}}}{\Sigma x} \rightarrow 1 \implies H \rightarrow 0 \] 
+
+Competitive exclusion dynamics for the 3 genotype system with no mutation and no dispersal is given in Figure X. 
+
+\subsection*{Evolutionary tradeoffs}
+
 
 \bibliography{library}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Figures %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\newpage
-%\begin{figure}[h]
-%    \begin{center}
-%       \includegraphics[scale=]{}
-%    \end{center}
-%\caption[\textbf{}]{\textbf{}. }
-%\label{Figure1}
-%\end{figure}
+\newpage
+\begin{figure}
+
+ \hspace*{-2cm}\includegraphics[scale=0.65]{entropy3d.pdf}
+ \caption{Competitive exclusion among three genotypes in an environment with no dispersal and no mutation.}
+\end{figure}
+
+\newpage
+
+\begin{figure}
+ \hspace*{-1cm}\includegraphics[scale=0.65]{entropy3x3.pdf}
+ \caption{Competitive exclusion among three genotypes with and without mutation and no dispersal. Left column is with 0 mutation, while the middle and right columns give the steady state with $q=0.1$ and $q=1$, respectively.}
+\end{figure}
+ 
+ 
 \end{document}

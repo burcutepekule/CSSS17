@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  23 JUN 2017 14:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  25 JUN 2017 11:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -433,71 +433,85 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 41.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 50.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 49.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 50.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 49.
  [1
 
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-
-LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 151.
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
 
 
-
-LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 151.
+LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 205.
 
 
 
-Overfull \hbox (69.9382pt too wide) in paragraph at lines 151--151
-[] 
+LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 205.
+
+
+[4]
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 230.
+
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 230.
+
+[5]
+Overfull \hbox (2.95084pt too wide) in paragraph at lines 243--244
+\OT1/cmr/m/n/12 The within-between de-com-po-si-tion of en-tropy is made anal-o
+-gously to the clas-si-cal ANOVA
  []
 
-
-LaTeX Font Warning: Command \small invalid in math mode on input line 170.
-
-
-LaTeX Font Warning: Command \small invalid in math mode on input line 170.
-
-
-Overfull \hbox (24.00473pt too wide) in paragraph at lines 170--170
-[] 
- []
-
-[3]
+[6]
 No file entropy.bbl.
-[4] (./entropy.aux) ) 
+[7] <entropy3d.pdf, id=41, 848.16875pt x 289.08pt>
+File: entropy3d.pdf Graphic file (type pdf)
+ <use entropy3d.pdf>
+Package pdftex.def Info: entropy3d.pdf used on input line 282.
+(pdftex.def)             Requested size: 551.30315pt x 187.89977pt.
+
+Overfull \hbox (42.71014pt too wide) in paragraph at lines 282--283
+[]| [] 
+ []
+
+<entropy3x3.pdf, id=42, 638.385pt x 469.755pt>
+File: entropy3x3.pdf Graphic file (type pdf)
+ <use entropy3x3.pdf>
+Package pdftex.def Info: entropy3x3.pdf used on input line 289.
+(pdftex.def)             Requested size: 414.94533pt x 305.33713pt.
+ [8 <./entropy3d.pdf> <./entropy3x3.pdf>] (./entropy.aux) ) 
 Here is how much of TeX's memory you used:
- 6175 strings out of 492995
- 93359 string characters out of 6132704
- 196221 words of memory out of 5000000
- 9597 multiletter control sequences out of 15000+600000
+ 6187 strings out of 492995
+ 93556 string characters out of 6132704
+ 193233 words of memory out of 5000000
+ 9607 multiletter control sequences out of 15000+600000
  20743 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,16n,39p,381b,256s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2017/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmbx6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmbx8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmex10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmi8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12
-.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.p
-fb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb>
-</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
-r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/
-local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on entropy.pdf (4 pages, 168697 bytes).
+ 39i,16n,39p,533b,256s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/
+2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2
+017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/201
+7/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2017
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2017/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2017/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2017/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2017/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2017/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2017/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2017/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2017/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2017/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmsy8.pfb>
+Output written on entropy.pdf (8 pages, 1073411 bytes).
 PDF statistics:
- 81 PDF objects out of 1000 (max. 8388607)
- 58 compressed objects within 1 object stream
+ 144 PDF objects out of 1000 (max. 8388607)
+ 102 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
