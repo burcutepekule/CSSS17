@@ -44,12 +44,7 @@ end
 for i=1:length(bits)
     avgEig(i)=mean(maxEig(i,:));
 end
-% file2save = ['DATA_' folderName '_TS_'  num2str(timeStamp)];
-if (q==0)
-    file2save = ['DATA_' folderName '_MUT_OFF'];
-else
-    file2save = ['DATA_' folderName '_MUT_ON'];
-end
+file2save = ['DATA_' folderName '_MUT_' num2str(q*10000) '_E4'];
 assignin('caller','rNormVec', rNormVec)
 assignin('caller','rOffset', rOffset)
 assignin('caller','alp', alp)

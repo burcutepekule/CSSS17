@@ -6,7 +6,7 @@ xpos = ceil((screensize(3)-sz(2))/2); % center the figure on the
 ypos = ceil((screensize(4)-sz(1))/2); % center the figure on the
 h = figure('position',[xpos, ypos, sz(2), sz(1)]);
 
-mut = 'OFF';
+mut = 'ON';
 subplot(2,2,1)
 load(['DATA_ZERO_ZERO_MUT_' mut ])
 hist(maxEig,20)
