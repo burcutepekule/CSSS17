@@ -1,4 +1,4 @@
-function [t,y] = generateNumericODE(N,PN,sVec,rVec,qMat,A,M,y0,tspan)
+function [Ares,Mres] = linearizeMatrices(N,PN,A,M)
 %RESHAPE A and M accordingly
 % A(N,N,PN) <-
 % a1_1_1,a1_1_2,a1_1_3,a1_2_1,a1_2_2,a1_2_3,a2_1_1,a2_1_2,a2_1_3,a2_2_1,a2_2_2,a2_2_3
@@ -49,7 +49,6 @@ for i=1:N
         pnIdx = pnIdx +1;
     end
 end
-options = odeset('NonNegative',1:N*PN);
-[t,y] = ode45(@(t,y) odefcn(y,Ares,Mres,N,PN,sVec,rVec,qMat), tspan, y0,options);
+
 end
 

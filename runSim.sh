@@ -6,8 +6,8 @@
 numSims=100
 mu=0.1
 numBits=3
-rNormVec="[1,0.01,0.01,0.1]"
-rOffset=1
+rNormVec="[1,0.1,0.5,0.5]"
+rOffset=0
 alp=1
 #q=0
 numPatches=$((2**$numBits))
@@ -20,7 +20,9 @@ usrnamePass="'$usrname'"
 
 arrA=("ZERO" "UNIFORM")
 arrM=("ZERO" "UNIFORM")
-qArr=(0 0.1)
+#arrA=("UNIFORM")
+#arrM=("UNIFORM")
+qArr=(0 0.01)
 
 for distA in "${arrA[@]}"
 do
@@ -43,6 +45,7 @@ mkdir DATA
 
 cd /Users/$usrname/Desktop/CSSS17/MATLAB
 matlab -nodisplay -nodesktop -nojvm -r "try saveJacobians4C(${last},${numSims},${numBits},${rNormVec},${rOffset},${alp},${mu},${q},${distAPass},${distMPass},${usrnamePass}); catch; end; quit" PID=$!
+wait $PID
 
 cd /Users/burcu/Desktop/CSSS17/cpp
 c++ -std=c++11 main.cpp -o exe -I/usr/local/include -I/usr/local/Cellar/eigen/3.3.3/include/eigen3 -I/usr/$usrname -L/usr/local/lib -lgsl -lgslcblas
@@ -52,8 +55,6 @@ foldernameDist=$distA$subs$distM
 mkdir $foldernameDist
 cd $root0$foldernameDist
 
-
-cd $root0$foldernameDist
 foldername=S_${numBits}
 mkdir $foldername
 cd $root0$foldernameDist/$foldername
