@@ -3,7 +3,7 @@
 #saveJacobians4C(numOfSims,N,PN,Sp,s,r,mu,distA,distB)
 
 
-numSims=500
+numSims=100
 mu=0.1
 numBits=3
 rNormVec="[1,1,1,1]"

@@ -6,11 +6,14 @@ strains      = generateBinaryStrains(numBits);
 % rNormVec = [1 0.05 0.5 0.5]
 hamDistMat = zeros(N,N);
 rMat       = zeros(N,N);
+kMat       = zeros(N,N);
+kFunc      = [100 10 40 40];
 for i=1:N
     for k=1:N
         hamDistMat(i,k) = abs(sum(xor(strains(i,:),strains(k,:))));
         %hamming distance is basically the index of the rNormVec
         rMat(i,k) = rOffset+alp*rNormVec(hamDistMat(i,k)+1);
+        kMat(i,k) = kFunc(hamDistMat(i,k)+1);
     end
 end
 qMat    = q.^hamDistMat;
@@ -25,25 +28,20 @@ qMat(1:N+1:N*N) = 0;
 rVec = rMat(:)'; %LINEARIZE
 rVec = ones(size(rVec));
 sVec = rVec; %we need to change this if we want s to be different for each patch / species
-kFunc= 100:-10:30;
-kVec = kFunc;
-for i=1:PN-1
-    kVec = [kVec circshift(kFunc',i)'];
-end
-kVec = .1*kVec;
+kVec = kMat(:)';
 funcName = ['jacob_quasi_' num2str(N)  '_' num2str(PN)];
 if (exist(funcName, 'file') ~= 2)
     [~,~] = generateSymbolicJacobian(N,PN);
 end
 mkdir(['/Users/' usrname '/Desktop/SIM_' num2str(timeStamp) '/JacobianData/J_BITS_' num2str(numBits)]);
 sims = 1;
-tspan = [0 2500];
+tspan = [0 5000];
 tol   = 10^-5*ones(1,N*PN);
-while (sims<=numOfSims)
     [M,A] = generateMatrices(N,PN,mu,distA,distM); 
+while (sims<=numOfSims)
 %     M=M;
 %     A=A; %A's are too big appearently
-    y0    = (1+randi(10,1,N*PN))./kVec; %at least 1
+    y0    = (1+randi(50,1,N*PN)); %at least 1
     [~,y] = generateNumericODE(N,PN,rVec,kVec,qMat,A,M,y0,tspan);
     % WHEN THE POPULATIONS GET EXPLODED, REASON IS S IS TOO SMALL
     % THAT'S WHY IN THE PAPER THEY SET THE r SUCH THAT dX/dt=0
