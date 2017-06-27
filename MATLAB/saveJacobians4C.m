@@ -43,20 +43,19 @@ while (sims<=numOfSims)
     %     A=A; %A's are too big appearently
     y0    = randi(100,1,N*PN); %at least 1
     [~,y] = generateNumericODE(N,PN,rVec,kVec,qMat,A,M,y0,tspan);
-    figure
-    hold on;
-    plot(y,'k.','linewidth',2)
-    for m=1:N
-        plot(y(:,(m-1)*(N+1)+1),'g--','linewidth',2)
-    end
-    grid on;
+%     figure
+%     hold on;
+%     plot(y,'k.','linewidth',2)
+%     for m=1:N
+%         plot(y(:,(m-1)*(N+1)+1),'g--','linewidth',2)
+%     end
+%     grid on;
     % WHEN THE POPULATIONS GET EXPLODED, REASON IS S IS TOO SMALL
     % THAT'S WHY IN THE PAPER THEY SET THE r SUCH THAT dX/dt=0
     numOfPts = size(y,1);
     pts2consider=round(numOfPts*0.1);
     yCheck = y(end:-1:end-pts2consider,:);
     varIny = var(yCheck);
-    pause
     if(sum(varIny<tol)==N*PN)
         filename  = ['/Users/' usrname '/Desktop/SIM_' num2str(timeStamp) '/JacobianData/J_BITS_' num2str(numBits) '/J_' num2str(sims-1) '.txt'];
         X = y(end,:);
