@@ -13,7 +13,7 @@ for i=1:N
     for l=1:PN
         sum01=0; sum02=0; sum03=0; sum04=0; sum05=0;
         for k=1:N
-            sum01=sum01+A(i,k,l)*X(k,l);
+            sum01=sum01+A(i,k,l)*X(k,l)/K(i,l);
         end
         for k=1:PN
             sum02=sum02+M(i,l,k);
@@ -27,9 +27,9 @@ for i=1:N
         end
         % TOTAL ABUNDANCE IN PATCH L
         for k=1:N
-            sum05=sum05+X(k,l);
+            sum05=sum05+X(k,l)/K(i,l);
         end
-        eqn{i,l} = R(i,l)*X(i,l)-S(i,l)*X(i,l)*sum05/K(i,l)+X(i,l)*sum01-X(i,l)*sum02+sum03+sum04;
+        eqn{i,l} = R(i,l)*X(i,l)-S(i,l)*X(i,l)*sum05+X(i,l)*sum01-X(i,l)*sum02+sum03+sum04;
     end
 end
 eqnVec = [];

@@ -7,7 +7,7 @@ strains      = generateBinaryStrains(numBits);
 hamDistMat = zeros(N,N);
 rMat       = zeros(N,N);
 kMat       = zeros(N,N);
-kFunc      = [100 10 40 40];
+kFunc      = [100 30 70 70];
 for i=1:N
     for k=1:N
         hamDistMat(i,k) = abs(sum(xor(strains(i,:),strains(k,:))));
@@ -35,20 +35,28 @@ if (exist(funcName, 'file') ~= 2)
 end
 mkdir(['/Users/' usrname '/Desktop/SIM_' num2str(timeStamp) '/JacobianData/J_BITS_' num2str(numBits)]);
 sims = 1;
-tspan = [0 5000];
+tspan = [0 100];
 tol   = 10^-5*ones(1,N*PN);
-    [M,A] = generateMatrices(N,PN,mu,distA,distM); 
 while (sims<=numOfSims)
-%     M=M;
-%     A=A; %A's are too big appearently
-    y0    = (1+randi(50,1,N*PN)); %at least 1
+    [M,A] = generateMatrices(N,PN,mu,distA,distM);
+    %     M=M;
+    %     A=A; %A's are too big appearently
+    y0    = randi(100,1,N*PN); %at least 1
     [~,y] = generateNumericODE(N,PN,rVec,kVec,qMat,A,M,y0,tspan);
+    figure
+    hold on;
+    plot(y,'k.','linewidth',2)
+    for m=1:N
+        plot(y(:,(m-1)*(N+1)+1),'g--','linewidth',2)
+    end
+    grid on;
     % WHEN THE POPULATIONS GET EXPLODED, REASON IS S IS TOO SMALL
     % THAT'S WHY IN THE PAPER THEY SET THE r SUCH THAT dX/dt=0
     numOfPts = size(y,1);
     pts2consider=round(numOfPts*0.1);
     yCheck = y(end:-1:end-pts2consider,:);
     varIny = var(yCheck);
+    pause
     if(sum(varIny<tol)==N*PN)
         filename  = ['/Users/' usrname '/Desktop/SIM_' num2str(timeStamp) '/JacobianData/J_BITS_' num2str(numBits) '/J_' num2str(sims-1) '.txt'];
         X = y(end,:);

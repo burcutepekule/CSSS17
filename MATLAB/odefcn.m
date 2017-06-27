@@ -5,12 +5,13 @@ indx = 1;
 for i=1:N
     for l=1:PN
         sum01=0; sum02=0; sum03=0; sum04=0; sum05=0;
-        xDum = x((i-1)*PN+l)/kVec((i-1)*PN+l);
+        xDum = x((i-1)*PN+l);
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        % SUM OVER INTERACTIONS
         for k=1:N
-            %             sum01=sum01+double(Ares(i,k,l))*x(k,l);
             sum01=sum01+double(Ares(i,k,l))*x((k-1)*PN+l)/kVec((i-1)*PN+l);
         end
+        % SUM OVER DISPERSAL
         for k=1:PN
             sum02=sum02+double(Mres(i,l,k));
         end
@@ -19,7 +20,7 @@ for i=1:N
         end
         % MUTATION PART
         for k=1:N
-            sum04=sum04-qMat(i,k)*x((k-1)*PN+l)/kVec((i-1)*PN+l)+qMat(k,i)*x((i-1)*PN+l)/kVec((i-1)*PN+l);
+            sum04=sum04-qMat(i,k)*x((i-1)*PN+l)+qMat(k,i)*x((k-1)*PN+l);
         end
         % TOTAL ABUNDANCE IN PATCH L
         for k=1:N
