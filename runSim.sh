@@ -3,8 +3,7 @@
 #saveJacobians4C(numOfSims,N,PN,Sp,s,r,mu,distA,distB)
 
 
-numSims=100
-mu=0.1
+numSims=300
 numBits=3
 rNormVec="[1,1,1,1]"
 rOffset=0
@@ -20,14 +19,18 @@ subs="_"
 usrnamePass="'$usrname'"
 
 arrA=("ZERO")
-arrM=("UNIFORM" "EXP" "ZERO")
-qArr=(0 0.01 0.02 0.05 0.1)
+arrM=("LIN")
+qArr=(0.1)
+muArr=(0.0 0.0010 0.0050 0.010 0.015 0.020 0.025 0.030 0.035 0.040 0.045 0.050 0.055 0.060 0.065 0.070 0.075 0.080 0.085 0.090 0.095 0.10 0.20 0.50 1 2 5)
+#muArr=(0.0 0.010 0.020 0.050 0.080 0.10 0.20 0.50 1 2 5)
 
 for distA in "${arrA[@]}"
 do
 for distM in "${arrM[@]}"
 do
 for q in ${qArr[*]}
+do
+for mu in ${muArr[*]}
 do
 
 #timestamp=`date +%s` $*
@@ -44,7 +47,7 @@ mkdir JacobianData
 mkdir DATA
 
 cd /Users/$usrname/Desktop/CSSS17/MATLAB
-matlab -nodisplay -nodesktop -nojvm -r "try saveJacobians4C(${last},${numSims},${numBits},${rNormVec},${rOffset},${alp},${mu},${q},${distAPass},${distMPass},${usrnamePass}); catch; end; quit"
+matlab -nodisplay -nodesktop -nojvm -r "try saveJacobians4C_Lin(${last},${numSims},${numBits},${rNormVec},${rOffset},${alp},${mu},${q},${distAPass},${distMPass},${usrnamePass}); catch; end; quit"
 
 cd /Users/burcu/Desktop/CSSS17/cpp
 c++ -std=c++11 main.cpp -o exe -I/usr/local/include -I/usr/local/Cellar/eigen/3.3.3/include/eigen3 -I/usr/$usrname -L/usr/local/lib -lgsl -lgslcblas
@@ -73,4 +76,4 @@ rm -r /Users/$usrname/Desktop/SIM_${last}
 done
 done
 done
-
+done

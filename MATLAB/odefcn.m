@@ -16,7 +16,7 @@ for i=1:N
             sum02=sum02+double(Mres(i,l,k));
         end
         for k=1:PN
-            sum03=sum03+double(Mres(i,k,l))*x((i-1)*PN+k)/kVec((i-1)*PN+l);
+            sum03=sum03+double(Mres(i,k,l))*x((i-1)*PN+k);
         end
         % MUTATION PART
         for k=1:N
