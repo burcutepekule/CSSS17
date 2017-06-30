@@ -1,4 +1,4 @@
-function [M,A] = generateMatrices(N,PN,mu,distA,distM)
+function [M,A] = generateMatrices(N,PN,mu,distA,distM,m)
 M   = zeros(1,N*PN*PN-N*PN);
 len = PN*PN-PN;
 for k=1:N
@@ -10,12 +10,34 @@ for k=1:N
         dum = randn;
     elseif(double(strcmp(distM,'ZERO'))==1)
         dum = 0;
-    elseif(double(strcmp(distM,'LIN'))==1)
+    elseif(double(strcmp(distM,'LIN_02_FWD'))==1)
         dum = zeros(1,len);
+        for i=1:N-1
+            dum((i-1)*(len/N)+i)=abs(randn);
+        end
+        dum((i-1)*(len/N)+i+1)=abs(randn);
+    elseif(double(strcmp(distM,'LIN_01_FWD'))==1)
+        dum = zeros(1,len);
+        for i=1:N-1
+            dum((i-1)*(len/N)+i)=m;
+        end
+        dum((i-1)*(len/N)+i+1)=m;
+    elseif(double(strcmp(distM,'LIN_01_REV'))==1)
+        dum = zeros(1,len);
+        dum(N-1)=m;
+        for i=2:N
+            dum((i-1)*(len/N)+i-1)=m;
+        end
+    elseif(double(strcmp(distM,'LIN_01_BOTH'))==1)
+        dum = zeros(1,len);
+        dum(N-1)=1;
+        for i=2:N
+            dum((i-1)*(len/N)+i-1)=1;
+        end
         for i=1:N-1
             dum((i-1)*(len/N)+i)=1;
         end
-        dum((i-1)*(len/N)+i+1)=1/7;
+        dum((i-1)*(len/N)+i+1)=1;
     end
     M((k-1)*len+1:k*len)=dum;
 end

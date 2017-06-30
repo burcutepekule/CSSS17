@@ -1,4 +1,4 @@
-function [t,y] = generateNumericODE(N,PN,rVec,kVec,qMat,A,M,y0,tspan)
+function [t,y,Mres,Ares] = generateNumericODE(N,PN,rVec,kVec,qMat,A,M,y0,tspan)
 %RESHAPE A and M accordingly
 % A(N,N,PN) <-
 % a1_1_1,a1_1_2,a1_1_3,a1_2_1,a1_2_2,a1_2_3,a2_1_1,a2_1_2,a2_1_3,a2_2_1,a2_2_2,a2_2_3
@@ -50,6 +50,7 @@ for i=1:N
     end
 end
 options = odeset('NonNegative',1:N*PN);
-[t,y] = ode45(@(t,y) odefcn(y,Ares,Mres,N,PN,rVec,kVec,qMat), tspan, y0,options);
+[t,y] = ode15s(@(t,y) odefcn(y,Ares,Mres,N,PN,rVec,kVec,qMat), tspan, y0,options);
+% [t,y] = ode45(@(t,y) odefcn(y,Ares,Mres,N,PN,rVec,kVec,qMat), tspan, y0);
 end
 

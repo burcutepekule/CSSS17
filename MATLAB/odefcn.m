@@ -7,7 +7,7 @@ for i=1:N
         sum01=0; sum02=0; sum03=0; sum04=0; sum05=0;
         xDum = x((i-1)*PN+l);
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        % SUM OVER INTERACTIONS
+        %SUM OVER INTERACTIONS
         for k=1:N
             sum01=sum01+double(Ares(i,k,l))*x((k-1)*PN+l)/kVec((i-1)*PN+l);
         end
@@ -29,10 +29,7 @@ for i=1:N
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         rDum = rVec((i-1)*PN+l);
         dydt(indx) = rDum*(1-sum05)*xDum+xDum*sum01-xDum*sum02+sum03+sum04;
-        %         dydt(indx) = rVec((i-1)*PN+l)*(1-sum05/kVec((i-1)*PN+l))*x((i-1)*PN+l)+x((i-1)*PN+l)*sum01-x((i-1)*PN+l)*sum02+sum03+sum04;
-        %         dydt(indx) = (rVec((i-1)*PN+l)*x((i-1)*PN+l)-sVec((i-1)*PN+l)*x((i-1)*PN+l)*sum05)/kVec((i-1)*PN+l)+x((i-1)*PN+l)*sum01-x((i-1)*PN+l)*sum02+sum03+sum04;
         indx = indx+1;
-        
     end
 end
 

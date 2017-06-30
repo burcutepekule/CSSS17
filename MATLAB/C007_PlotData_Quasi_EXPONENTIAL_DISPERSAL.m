@@ -1,7 +1,7 @@
 clear all;close all;clc;
 set(0,'DefaultAxesFontSize',14)
 mut = 1000;
-idx = 2;
+idx = 3;
 D = dir(['/Users/burcu/Desktop/CSSS17/MATLAB/DATA_' num2str(idx) '_ZERO_EXP_MUT_' num2str(mut) '_E4_MU_*']);
 muVec = zeros(1,size(D,1));
 for i=1:size(D,1)

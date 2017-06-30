@@ -52,7 +52,7 @@ while (sims<=numOfSims)
     %     M=M;
     %     A=A; %A's are too big appearently
     y0    = randi(10,1,N*PN); %at least 1
-    [~,y] = generateNumericODE(N,PN,rVec,kVec,qMat,A,M,y0,tspan);
+    [~,y,Mres,Ares] = generateNumericODE(N,PN,rVec,kVec,qMat,A,M,y0,tspan);
     %     figure
     %     hold on;
     %     plot(y,'k.','linewidth',2)
