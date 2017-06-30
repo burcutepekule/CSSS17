@@ -22,7 +22,7 @@ numOfSims = 1;
 hamDistMat = zeros(N,N);
 rMat       = zeros(N,N);
 kMatTemp   = zeros(N,N);
-kFunc      = [1 0.55 0.1];
+kFunc      = [1 0.8 0.1];
 kFunc      = kFunc(1:N);
 
 for i=1:PN
@@ -44,60 +44,43 @@ qVec            = qVecTemp(qVecTemp~=1); %delete the ones, send it as a vector
 rVec  = ones(1,N*PN);
 sVec  = rVec; %we need to change this if we want s to be different for each patch / species
 kVec  = kMat(:)';
-sims  = 1;
-tspan = [0 10^30];
+tspan = [0 10000];
 tol   = 10^-5*ones(1,N*PN);
-m     = 10;
-[M,A] = generateMatrices(N,PN,mu,distA,distM,m);
-% y0    = [1 0.1*ones(1,N*PN-1)]; %INITIAL CONDITIONS
-% y0    = [x_1^{1} x_2^{1} x_3^{1} ]
-y0      = [0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 1];
-[~,y,Mres,Ares] = generateNumericODE(N,PN,rVec,kVec,qMat,A,M,y0,tspan);
-numOfPts = size(y,1);
-pts2consider=round(numOfPts*0.1);
-yCheck = y(end:-1:end-pts2consider,:);
-varIny = var(yCheck);
-plot(1:numOfPts,y)
-%%
-% if(sum(varIny<tol)==N*PN)
-%     X = y(end,:);
-% %     inputArr=num2cell([A(:)' kVec M(:)' qVec rVec sVec  X]);
-% %     inputArr_allZero=num2cell([A(:)' kVec M(:)' qVec rVec sVec  zeros(size(X))]);
-% %     fh = str2func(funcName);
-% %     J_out=fh(inputArr{:});
-% %     J_out_allZero=fh(inputArr_allZero{:});
-% %     eigNormal  = eig(J_out);
-% %     eigAllZero = eig(J_out_allZero);
-%     xMean=mean(X,1);
-% end
-SS = reshape(y(end,:),N,PN); %EVERY ROW HAS THE ABUNDANCES OF THE PATCHES!
-
-
-binK =kMatTemp==max(kFunc); %find the most fit
-sz = [300,1000]; % figure size
-screensize = get(0,'ScreenSize');
-xpos = ceil((screensize(3)-sz(2))/2); % center the figure on the
-ypos = ceil((screensize(4)-sz(1))/2); % center the figure on the
-figure('position',[xpos, ypos, sz(2), sz(1)]);
-for ii=1:PN
-    scatter((ii-1)*N+1:(ii-1)*N+N,SS(ii,:),30,Cdata(ii,:));
-    hold on;
-    [~,indxs]=find(binK(ii,:)==1);
-    for ll=1:length(indxs)
-        scatter((ii-1)*N+indxs(ll),SS(ii,indxs),30,[0 0 0],'filled');
+mVec  = 0.1:0.01:10;
+% y0    = [x_1^{1} x_2^{1} x_3^{1} x_1^{2} x_2^{2} x_3^{2} x_1^{3} x_2^{3} x_3^{3}];
+y0LastVary = 0.1:0.1:1;
+sims       = 1;
+numSims    = 10;
+X          = zeros(length(y0LastVary),length(mVec),N*PN);
+for i=1:length(y0LastVary)
+    for k=1:length(mVec)
+        m  = mVec(k);
+        [M,A] = generateMatrices(N,PN,mu,distA,distM,m);
+        y0 = [0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 y0LastVary(i)];
+        [~,y,Mres,Ares] = generateNumericODE(N,PN,rVec,kVec,qMat,A,M,y0,tspan);
+        numOfPts     = size(y,1);
+        pts2consider = round(numOfPts*0.1);
+        yCheck = y(end:-1:end-pts2consider,:);
+        varIny = var(yCheck);
+        if(sum(varIny<tol)==N*PN)
+            X(i,k,:)= y(end,:);
+            %     inputArr=num2cell([A(:)' kVec M(:)' qVec rVec sVec  X]);
+            %     inputArr_allZero=num2cell([A(:)' kVec M(:)' qVec rVec sVec  zeros(size(X))]);
+            %     fh = str2func(funcName);
+            %     J_out=fh(inputArr{:});
+            %     J_out_allZero=fh(inputArr_allZero{:});
+            %     eigNormal  = eig(J_out);
+            %     eigAllZero = eig(J_out_allZero);
+        end
     end
-    plot([ii*PN+0.5 ii*PN+0.5],[0 10],'k--','linewidth',1)
 end
-axis([0 ii*PN+0.5 0 max(SS(:))+0.1])
-grid on;
-hold off;
-%%
+%% IC DEPENDENCE
+for k=1:length(mVec)
+    allX      = X(:,k,:);
+    allX      = reshape(allX,length(y0LastVary),N*PN);
+    sumVar_02(k) = sum(var(allX));
+    sumVar_01(k) = sum(abs(allX(end,:)-allX(1,:)));
+end
+scatter(mVec,sumVar_01)
 figure
-plot(y,'linewidth',2)
-h=legend('$x_1^{1}$','$x_2^{1}$','$x_3^{1}$',...
-       '$x_1^{2}$','$x_2^{2}$','$x_3^{2}$',...
-       '$x_1^{3}$','$x_2^{3}$','$x_3^{3}$');   
-set(h,'Interpreter','latex')
-grid on;
-
-h.FontSize = 16;
+scatter(mVec,sumVar_02)
