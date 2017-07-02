@@ -47,8 +47,8 @@ sVec  = rVec; %we need to change this if we want s to be different for each patc
 kVec  = kMat(:)';
 tspan = [0 100];
 tol   = 10^-5*ones(1,N*PN);
-mVec  = [0.95:0.01:1 1.1:0.1:3];
-y0LastVary = [.5];
+mVec  = [0:0.5:5];
+y0LastVary = [.1 .2 .3 .5 .8 1];
 sims       = 1;
 numSims    = 10;
 X          = zeros(length(y0LastVary),length(mVec),N*PN);
@@ -88,17 +88,19 @@ for k=length(mVec):-1:1
     xpos = ceil((screensize(3)-sz(2))/2); % center the figure on the
     ypos = ceil((screensize(4)-sz(1))/2); % center the figure on the
     figure('position',[xpos, ypos, sz(2), sz(1)]);
-    
-    xMean=reshape(allX(1,:),N,PN)';
-    h=scatter(1:N*PN,xMean(:)',30);
-    xVals = h.XData;
-    yVals = h.YData;
-            bar(xVals,yVals)
-    grid on;
-    hold off;
-
-    title(['m : ' num2str(mVec(k))])
-    axis([0 N*PN+1 0 1])
+    for yy=1:length(y0LastVary)
+        subplot(3,2,yy)
+        xMean=reshape(allX(yy,:),N,PN)';
+        h=scatter(1:N*PN,xMean(:)',30);
+        hold on;
+        xVals = h.XData;
+        yVals = h.YData;
+        bar(xVals,yVals)
+        grid on;
+        hold off;
+        title(['m : ' num2str(mVec(k)) ' yLast : ' num2str(y0LastVary(yy))])
+        axis([0 N*PN+1 0 1])
+    end
 end
 % scatter(mVec,sumVar_01)
 % figure
