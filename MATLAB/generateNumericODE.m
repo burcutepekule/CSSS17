@@ -49,8 +49,8 @@ for i=1:N
         pnIdx = pnIdx +1;
     end
 end
-options = odeset('NonNegative',1:N*PN);
-[t,y] = ode15s(@(t,y) odefcn(y,Ares,Mres,N,PN,rVec,kVec,qMat), tspan, y0,options);
+options = odeset('NonNegative',1:N*PN,'MaxStep',1e-2);
+[t,y] = ode23(@(t,y) odefcn(y,Ares,Mres,N,PN,rVec,kVec,qMat), tspan, y0, options);
 % [t,y] = ode45(@(t,y) odefcn(y,Ares,Mres,N,PN,rVec,kVec,qMat), tspan, y0);
 end
 

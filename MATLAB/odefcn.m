@@ -26,6 +26,7 @@ for i=1:N
         for k=1:N
             sum05=sum05+x((k-1)*PN+l)/kVec((i-1)*PN+l);
         end
+        % sum05=sum05+x((i-1)*PN+l)/kVec((i-1)*PN+l);
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         rDum = rVec((i-1)*PN+l);
         dydt(indx) = rDum*(1-sum05)*xDum+xDum*sum01-xDum*sum02+sum03+sum04;
