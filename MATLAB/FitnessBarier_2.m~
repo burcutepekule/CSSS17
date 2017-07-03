@@ -8,22 +8,22 @@ Cdata=[    0.9290    0.6940    0.1250;
     0.6350    0.0780    0.1840;
     0.9290    0.6940    0.1250];
 %%% SIMULATION PARAMETERS %%%
-distA     = 'ZERO';
-distM     = 'LIN_01_FWD';
-N         = 3;
-PN        = N;
-rConst    = 1;
-rNormVec  = rConst*ones(1,N);
-rOffset   = 0;
-alp       = 1;
-q         = 0;
-mu        = 0;
-numOfSims = 1;
+distA      = 'ZERO';
+distM      = 'LIN_01_FWD';
+N          = 4;
+PN         = N;
+rConst     = 1;
+rNormVec   = rConst*ones(1,N);
+rOffset    = 0;
+alp        = 1;
+q          = 0;
+mu         = 0;
+numOfSims  = 1;
 
 hamDistMat = zeros(N,N);
 rMat       = zeros(N,N);
 kMatTemp   = zeros(N,N);
-kFunc      = [1 .5 .8];
+kFunc      = [1 .8 .5 .3];
 kFunc      = kFunc(1:N);
 
 for i=1:PN
@@ -45,61 +45,92 @@ qVec            = qVecTemp(qVecTemp~=1); %delete the ones, send it as a vector
 rVec  = ones(1,N*PN);
 sVec  = rVec; %we need to change this if we want s to be different for each patch / species
 kVec  = kMat(:)';
-tspan = [0 10000];
 tol   = 10^-5*ones(1,N*PN);
-mVec  = [0:0.01:1 2 3 5 10];
-y0LastVary = [.5];
+mVec  = [5:10];
+y0LastVary = [0:.2:1];
 sims       = 1;
 numSims    = 10;
 X          = zeros(length(y0LastVary),length(mVec),N*PN);
-%%
+
 for i=1:length(y0LastVary)
     for k=1:length(mVec)
         [i k]
         m  = mVec(k);
         [M,A] = generateMatrices(N,PN,mu,distA,distM,m);
+        tspan = [0 100];
         y0 = [.1*ones(1,N*PN-1) y0LastVary(i)];
+        %         if(m<11)
+        %             tspan = [0 100];
+        %         else
+        %             tspan = [0 5000];
+        %         end
         [~,y,Mres,Ares] = generateNumericODE(N,PN,rVec,kVec,qMat,A,M,y0,tspan);
         numOfPts     = size(y,1);
         pts2consider = round(numOfPts*0.1);
         yCheck = y(end:-1:end-pts2consider,:);
         varIny = var(yCheck);
-        if(sum(varIny<tol)==N*PN)
-            X(i,k,:)= y(end,:);
+        flag = 0;
+        while(sum(varIny<tol)<N*PN)
+            [~,y,Mres,Ares] = generateNumericODE(N,PN,rVec,kVec,qMat,A,M,yCheck(end,:),tspan);
+            yCheck = y(end:-1:end-pts2consider,:);
+            varIny = var(yCheck);
+            
         end
+        X(i,k,:)= y(end,:);
+        figure
+        plot(y)
+        title(['m : ' num2str(mVec(k)) ' yLast : ' num2str(y0LastVary(i))]) 
+        pause
+        close all;
+        %         if(sum(varIny<tol)==N*PN)
+        %             X(i,k,:)= y(end,:);
+        %         end
     end
 end
 % IC DEPENDENCE
-% load('KL-DIV')
+save('SIM_01')
+% load('SIM_01')
 %%
-for k=length(mVec):-1:1
-    allX         = X(:,k,:);
-    allX         = reshape(allX,length(y0LastVary),N*PN);
-    sumVar_02(k) = sum(var(allX));
-    sumVar_01(k) = sum(abs(allX(end,:)-allX(1,:)));
-    diffX        = zeros(size(allX,1)-1,size(allX,2));
-    for i=2:size(allX,1)
-        diffX(i-1,:) = abs(allX(i,:)-allX(i-1,:));
-    end
-    sumVar_03(k) =sum(diffX(:));
-    binK =kMat>kFunc(2);
-    sz = [500,1200]; % figure size
-    screensize = get(0,'ScreenSize');
-    xpos = ceil((screensize(3)-sz(2))/2); % center the figure on the
-    ypos = ceil((screensize(4)-sz(1))/2); % center the figure on the
-    figure('position',[xpos, ypos, sz(2), sz(1)]);
-    
-    xMean=reshape(allX(1,:),N,PN)';
-    h=scatter(1:N*PN,xMean(:)',30);
-    xVals = h.XData;
-    yVals = h.YData;
-            bar(xVals,yVals)
-    grid on;
-    hold off;
 
-    title(['m : ' num2str(mVec(k))])
-    axis([0 N*PN+1 0 1])
+for i=1:length(y0LastVary)
+    for k=1:length(mVec)
+        vec = X(i,k,:);
+        vec = vec(:)
+        log2(vec)
+        ent(i,k) = -1*sum(vec.*log2(vec));
+    end
 end
+%%
+% for k=length(mVec):-1:1
+%     allX         = X(:,k,:);
+%     allX         = reshape(allX,length(y0LastVary),N*PN);
+%     sumVar_02(k) = sum(var(allX));
+%     sumVar_01(k) = sum(abs(allX(end,:)-allX(1,:)));
+%     diffX        = zeros(size(allX,1)-1,size(allX,2));
+%     for i=2:size(allX,1)
+%         diffX(i-1,:) = abs(allX(i,:)-allX(i-1,:));
+%     end
+%     sumVar_03(k) =sum(diffX(:));
+%     binK =kMat>kFunc(2);
+%     sz = [500,1200]; % figure size
+%     screensize = get(0,'ScreenSize');
+%     xpos = ceil((screensize(3)-sz(2))/2); % center the figure on the
+%     ypos = ceil((screensize(4)-sz(1))/2); % center the figure on the
+%     figure('position',[xpos, ypos, sz(2), sz(1)]);
+%     for yy=1:length(y0LastVary)
+%         subplot(3,3,yy)
+%         xMean=reshape(allX(yy,:),N,PN)';
+%         h=scatter(1:N*PN,xMean(:)',30);
+%         hold on;
+%         xVals = h.XData;
+%         yVals = h.YData;
+%         bar(xVals,yVals)
+%         grid on;
+%         hold off;
+%         title(['m : ' num2str(mVec(k)) ' yLast : ' num2str(y0LastVary(yy))])
+%         axis([0 N*PN+1 0 1])
+%     end
+% end
 % scatter(mVec,sumVar_01)
 % figure
 % scatter(mVec,sumVar_02)
