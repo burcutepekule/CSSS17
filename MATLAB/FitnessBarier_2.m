@@ -16,7 +16,7 @@ rConst     = 1;
 rNormVec   = rConst*ones(1,N);
 rOffset    = 0;
 alp        = 1;
-q          = 0.01;
+q          = 0.1;
 mu         = 0;
 numOfSims  = 1;
 
@@ -45,8 +45,8 @@ qVec            = qVecTemp(qVecTemp~=1); %delete the ones, send it as a vector
 rVec  = ones(1,N*PN);
 sVec  = rVec; %we need to change this if we want s to be different for each patch / species
 kVec  = kMat(:)';
-tol   = 10^-8*ones(1,N*PN);
-mVec  = [0.0001 0.001 0.01 .1:.1:6];
+tol   = 10^-6*ones(1,N*PN);
+mVec  = [0.0001 0.001 0.01 0.1:.1:6];
 y0LastVary = [.1:.1:1];
 X          = zeros(length(y0LastVary),length(mVec),N*PN);
 
@@ -69,47 +69,48 @@ for i=1:length(y0LastVary)
         varIny = var(yCheck);
         flag = 0;
         while(sum(varIny<tol)<N*PN)
-            [~,y,Mres,Ares] = generateNumericODE(N,PN,rVec,kVec,qMat,A,M,yCheck(end,:),tspan);
+            tspan=(flag+1).*tspan;
+            [~,y,Mres,Ares] = generateNumericODE(N,PN,rVec,kVec,qMat,A,M,y0,tspan);
             yCheck = y(end:-1:end-pts2consider,:);
             varIny = var(yCheck);
+            flag = flag+1;
         end
-        X(i,k,:)= y(end,:);
-%         figure
+         X(i,k,:)= y(end,:);
 %         plot(y)
-%         title(['m : ' num2str(mVec(k)) ' yLast : ' num2str(y0LastVary(i))])
+%         title(['m : ' num2str(mVec(k)) ' yLast : ' num2str(y0LastVary(i)) ' flag : ' num2str(flag)])
 %         pause
 %         close all;
     end
 end
 % IC DEPENDENCE
-save('SIM_04_ODE1_PART0_MUT')
+save('SIM_MUT_100')
 %%
-clear all;
-load('SIM_04_ODE1_PART0_MUT')
-for i=1:length(y0LastVary)
-    for k=1:length(mVec)
-        vec = X(i,k,:);
-        vecMat = reshape(vec(:),PN,N);
-        entrpy = 0;
-        for j=1:PN
-            vecTemp = vecMat(j,:);
-            vecNorm = vecTemp./sum(vecTemp);
-            entrpy = entrpy-1*sum(vecNorm.*log(vecNorm));
-        end
-        ent(i,k) = entrpy;
-    end
-end
-%%
-set(0,'DefaultAxesFontSize',14)
-cutOffm = length(mVec);
-[Xx,Yy]   = meshgrid(mVec(1:cutOffm),y0LastVary);
-ent2 = ent(:,1:cutOffm);
-s=surf(Xx,Yy,ent2);
-s.EdgeColor = 'none';
-ylabel('$x_{3}^{3}[0]$','interpreter','latex')
-xlabel('$m$','interpreter','latex')
-zlabel('entropy')
-colorbar
+% % clear all;
+% % load('SIM_04_ODE1_PART0_MUT')
+% for i=1:length(y0LastVary)
+%     for k=1:length(mVec)
+%         vec = X(i,k,:);
+%         vecMat = reshape(vec(:),PN,N);
+%         entrpy = 0;
+%         for j=1:PN
+%             vecTemp = vecMat(j,:);
+%             vecNorm = vecTemp./sum(vecTemp);
+%             entrpy = entrpy-1*sum(vecNorm.*log(vecNorm));
+%         end
+%         ent(i,k) = entrpy;
+%     end
+% end
+% %%
+% set(0,'DefaultAxesFontSize',14)
+% cutOffm = length(mVec);
+% [Xx,Yy]   = meshgrid(mVec(1:cutOffm),y0LastVary);
+% ent2 = ent(:,1:cutOffm);
+% s=surf(Xx,Yy,ent2);
+% s.EdgeColor = 'none';
+% ylabel('$x_{3}^{3}[0]$','interpreter','latex')
+% xlabel('$m$','interpreter','latex')
+% zlabel('entropy')
+% colorbar
 % 
 % %%
 % % for k=5:17
