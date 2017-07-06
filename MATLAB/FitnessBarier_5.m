@@ -16,7 +16,7 @@ rConst     = 1;
 rNormVec   = rConst*ones(1,N);
 rOffset    = 0;
 alp        = 1;
-q          = 3*0.001;
+q          = 0;
 mu         = 0;
 numOfSims  = 1;
 

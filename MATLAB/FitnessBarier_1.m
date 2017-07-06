@@ -45,8 +45,8 @@ qVec            = qVecTemp(qVecTemp~=1); %delete the ones, send it as a vector
 rVec  = ones(1,N*PN);
 sVec  = rVec; %we need to change this if we want s to be different for each patch / species
 kVec  = kMat(:)';
-tol   = 10^-6*ones(1,N*PN);
-mVec  = [0.0001 0.001 0.01 0.1:.1:6];
+tol   = 10^-8*ones(1,N*PN);
+mVec  = [0];
 y0LastVary = [.1:.1:1];
 X          = zeros(length(y0LastVary),length(mVec),N*PN);
 
@@ -83,7 +83,7 @@ for i=1:length(y0LastVary)
     end
 end
 % IC DEPENDENCE
-save('SIM_MUT_0')
+save(['SIM_MUT_M0_' num2str(q*1E5)])
 %%
 % % clear all;
 % % load('SIM_04_ODE1_PART0_MUT')

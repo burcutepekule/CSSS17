@@ -28,11 +28,8 @@ for ii=1:length(qVecAll)
 end
 %%
 set(0,'DefaultAxesFontSize',14)
-[Xx,Yy] = meshgrid(mVec,y0LastVary);
+[Xx,Yy] = meshgrid(log(mVec),y0LastVary);
 figure
-ylabel('$x_{3}^{3}[0]$','interpreter','latex')
-xlabel('$m$','interpreter','latex')
-zlabel('entropy')
 
 for i=1:size(D,1)
     s=surf(Xx,Yy,ent(:,:,i));
@@ -40,6 +37,11 @@ for i=1:size(D,1)
     title(['$q : $' num2str(qVecAll(i))],'interpreter','latex')
     hold on;
     colorbar
+    ylabel('$x_{4}^{4}[0]$','interpreter','latex')
+    xlabel('$\log(m)$','interpreter','latex')
+    zlabel('entropy')
+    figname = ['SURF_q' num2str(qVecAll(i)) '.png'];
+%     saveas(gcf,figname)
     pause
 end
 
